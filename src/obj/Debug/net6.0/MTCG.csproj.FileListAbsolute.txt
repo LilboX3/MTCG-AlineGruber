@@ -1,0 +1,14 @@
+C:\Users\MonaL\Documents\FHTW\3. Semester\SWEN\MTCG\bin\Debug\net6.0\MTCG.exe
+C:\Users\MonaL\Documents\FHTW\3. Semester\SWEN\MTCG\bin\Debug\net6.0\MTCG.deps.json
+C:\Users\MonaL\Documents\FHTW\3. Semester\SWEN\MTCG\bin\Debug\net6.0\MTCG.runtimeconfig.json
+C:\Users\MonaL\Documents\FHTW\3. Semester\SWEN\MTCG\bin\Debug\net6.0\MTCG.dll
+C:\Users\MonaL\Documents\FHTW\3. Semester\SWEN\MTCG\bin\Debug\net6.0\MTCG.pdb
+C:\Users\MonaL\Documents\FHTW\3. Semester\SWEN\MTCG\obj\Debug\net6.0\MTCG.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\MonaL\Documents\FHTW\3. Semester\SWEN\MTCG\obj\Debug\net6.0\MTCG.AssemblyInfoInputs.cache
+C:\Users\MonaL\Documents\FHTW\3. Semester\SWEN\MTCG\obj\Debug\net6.0\MTCG.AssemblyInfo.cs
+C:\Users\MonaL\Documents\FHTW\3. Semester\SWEN\MTCG\obj\Debug\net6.0\MTCG.csproj.CoreCompileInputs.cache
+C:\Users\MonaL\Documents\FHTW\3. Semester\SWEN\MTCG\obj\Debug\net6.0\MTCG.dll
+C:\Users\MonaL\Documents\FHTW\3. Semester\SWEN\MTCG\obj\Debug\net6.0\refint\MTCG.dll
+C:\Users\MonaL\Documents\FHTW\3. Semester\SWEN\MTCG\obj\Debug\net6.0\MTCG.pdb
+C:\Users\MonaL\Documents\FHTW\3. Semester\SWEN\MTCG\obj\Debug\net6.0\MTCG.genruntimeconfig.cache
+C:\Users\MonaL\Documents\FHTW\3. Semester\SWEN\MTCG\obj\Debug\net6.0\ref\MTCG.dll
