@@ -1,4 +1,5 @@
-﻿namespace MTCG
+﻿using System;
+namespace MTCG
 {
     internal class Program
     {

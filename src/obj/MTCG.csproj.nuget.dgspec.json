@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\MonaL\\Documents\\FHTW\\3. Semester\\SWEN\\MTCG\\MTCG.csproj": {}
+    "C:\\Users\\MonaL\\Documents\\FHTW\\3. Semester\\SWEN\\MTCG-AlineGruber\\src\\MTCG.csproj": {}
   },
   "projects": {
-    "C:\\Users\\MonaL\\Documents\\FHTW\\3. Semester\\SWEN\\MTCG\\MTCG.csproj": {
+    "C:\\Users\\MonaL\\Documents\\FHTW\\3. Semester\\SWEN\\MTCG-AlineGruber\\src\\MTCG.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\MonaL\\Documents\\FHTW\\3. Semester\\SWEN\\MTCG\\MTCG.csproj",
+        "projectUniqueName": "C:\\Users\\MonaL\\Documents\\FHTW\\3. Semester\\SWEN\\MTCG-AlineGruber\\src\\MTCG.csproj",
         "projectName": "MTCG",
-        "projectPath": "C:\\Users\\MonaL\\Documents\\FHTW\\3. Semester\\SWEN\\MTCG\\MTCG.csproj",
+        "projectPath": "C:\\Users\\MonaL\\Documents\\FHTW\\3. Semester\\SWEN\\MTCG-AlineGruber\\src\\MTCG.csproj",
         "packagesPath": "C:\\Users\\MonaL\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\MonaL\\Documents\\FHTW\\3. Semester\\SWEN\\MTCG\\obj\\",
+        "outputPath": "C:\\Users\\MonaL\\Documents\\FHTW\\3. Semester\\SWEN\\MTCG-AlineGruber\\src\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\MonaL\\AppData\\Roaming\\NuGet\\NuGet.Config",
