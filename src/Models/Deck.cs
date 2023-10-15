@@ -8,5 +8,12 @@ namespace MTCG
 {
     internal class Deck
     {
+        public List<Card> CardDeck { get; set; }
+
+        public Deck() { 
+            CardDeck = new List<Card>();
+        }
+        
+
     }
 }

@@ -8,5 +8,7 @@ namespace MTCG
 {
     internal class Stack
     {
+
+        public Stack() { }
     }
 }
