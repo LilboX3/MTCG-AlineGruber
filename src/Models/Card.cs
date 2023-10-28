@@ -10,6 +10,7 @@ namespace MTCG
     {
         public int Damage { get; set; }
         public string Element { get; set; }
+        public string Name { get; set; }
         public Card() { 
 
         }

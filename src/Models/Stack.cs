@@ -8,7 +8,19 @@ namespace MTCG
 {
     internal class Stack
     {
+        public List<Card> UserStack { get; set; }
+        public Stack() {
+            UserStack = new List<Card>();
+        }
 
-        public Stack() { }
+        public Card GetCard(string Name)
+        {
+            
+        }
+
+        public void RemoveCard()
+        {
+
+        }
     }
 }
