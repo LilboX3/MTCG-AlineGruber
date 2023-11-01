@@ -4,15 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MTCG
+namespace MTCG.Models
 {
-    internal abstract class Card
+    internal class Card
     {
         public int Damage { get; set; }
-        public string Element { get; set; }
         public string Name { get; set; }
-        public Card() { 
 
+        public Card(int damage, string name)
+        {
+            Damage = damage;
+            Name = name;
         }
+        
     }
 }

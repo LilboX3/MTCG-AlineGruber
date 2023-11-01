@@ -4,27 +4,80 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MTCG
+namespace MTCG.Models
 {
     internal class User
     {
         public int Coins { get; set; }
-        public string Name { get; set; }
+        public Credentials UserCredentials { get; set; }
         public int EloValue { get; set; }
+        public Card? CurrentCard { get; set; }
 
         private Deck _userDeck;
+        private Deck _battleDeck;
+        private Stack _userStack;
             
         
-        public User(string Username) {
+        public User(string Username, string Password) {
             Coins = 20;
-            Name = Username;
+            UserCredentials = new Credentials(Username, Password);
             EloValue = 100;
+            _userDeck = new Deck();
+            _userStack = new Stack();
+            CurrentCard = null;
         }
 
-        public void PayCard()
+        public void BuyPackage()
         {
+            Package Bought = new Package();
             Coins -= 5;
+            AddToStack(Bought);
         }
+
+        private void AddToStack(Package package)
+        {
+            Card[] cards = package.Cards;
+            for(int i=0; i<cards.Length; i++)
+            {
+                _userStack.AddCard(cards[i]);
+            }
+        }
+
+        public void LoseElo()
+        {
+            EloValue -= 5;
+        }
+
+        public void WinElo()
+        {
+            EloValue += 3;
+        }
+
+        public Card PlayCard()
+        {
+            CurrentCard = _userDeck.GetRandom();
+            return CurrentCard;
+        }
+
+        public Card LoseCard()
+        {
+            if(CurrentCard == null)
+            {
+                throw new Exception("Current Card of player is null!");
+            }
+            Card temp = CurrentCard;
+            CurrentCard = null;
+            return temp;
+        }
+
+        public void ChooseDeck()
+        {
+            Console.WriteLine(_userStack.ToString());
+            Console.WriteLine("Choose 4 cards to add to your deck: enter number of card");
+
+        }
+
+
 
 
     }
