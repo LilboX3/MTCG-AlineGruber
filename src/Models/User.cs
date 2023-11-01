@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace MTCG.Models
@@ -69,12 +70,30 @@ namespace MTCG.Models
             CurrentCard = null;
             return temp;
         }
-
+        
         public void ChooseDeck()
         {
+            if (_userStack.Size == 0)
+            {
+                Console.WriteLine("Your stack is empty. Consider buying a package!");
+                return;
+            }
+            Console.WriteLine("Your current Stack: ");
             Console.WriteLine(_userStack.ToString());
-            Console.WriteLine("Choose 4 cards to add to your deck: enter number of card");
+            Console.WriteLine("Choose the number of card you want to add to your deck: ");
+            
+            string choice = Console.ReadLine();
+            if (IsNumber(choice))
+            {
 
+            }
+            
+        }
+
+        private bool IsNumber(string text)
+        {
+            Regex regex = new Regex(@"^\d+$");
+            return regex.IsMatch(text);
         }
 
 

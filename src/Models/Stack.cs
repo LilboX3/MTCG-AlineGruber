@@ -9,7 +9,7 @@ namespace MTCG.Models
     internal class Stack
     {
         public List<Card> UserStack { get; set; }
-        private int _size;
+        public int Size { get; set; }
         public Stack() {
             UserStack = new List<Card>();
         }
@@ -22,19 +22,19 @@ namespace MTCG.Models
         public void RemoveCard()
         {
 
-            _size--;
+            Size--;
         }
 
         public void AddCard(Card card)
         {
             UserStack.Add(card);
-            _size++;
+            Size++;
         }
 
         public override string ToString()
         {
             string StackString = "";
-            for(int i = 0; i < _size; i++)
+            for(int i = 0; i < Size; i++)
             {
                 StackString += i.ToString()+". ";
                 StackString += UserStack[i].ToString();
