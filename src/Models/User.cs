@@ -86,6 +86,9 @@ namespace MTCG.Models
             if (IsNumber(choice))
             {
 
+            } else
+            {
+
             }
             
         }
