@@ -23,7 +23,7 @@ namespace MTCG.Models
             return null;
         }
 
-        public void RemoveCard()
+        public void RemoveCard(string Name)
         {
 
             Size--;

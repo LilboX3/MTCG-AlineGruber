@@ -29,6 +29,33 @@ namespace MTCG.test
 
         }
 
+        [Test]
+        public void TestPackage()
+        {
+            Package package = new Package();
+            for(int i = 0; i<package.Cards.Length; i++)
+            {
+                Console.WriteLine(package.Cards[i].ToString());
+            }
+        }
+
+        [Test]
+        public void TestStack()
+        {
+            Stack stack = new Stack();
+            Package package = new Package();
+
+            for (int i = 0; i < package.Cards.Length; i++)
+            {
+                stack.AddCard(package.Cards[i]);
+            }
+
+            foreach(Card card in stack.UserStack)
+            {
+                Console.WriteLine(card.ToString());
+            }
+        }
+
         [TearDown]
         public void Teardown()
         {

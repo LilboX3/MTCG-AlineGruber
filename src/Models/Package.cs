@@ -11,6 +11,7 @@ namespace MTCG.Models
         public Card[] Cards { get; set; }
         public Package() { 
             Cards = new Card[5];
+            GeneratePackage();
         }
 
         public MonsterCard GenerateRandomMonster()
@@ -63,6 +64,14 @@ namespace MTCG.Models
                 return GenerateRandomMonster();
             }
 
+        }
+
+        public void GeneratePackage()
+        {
+            for(int i= 0; i < Cards.Length; i++)
+            {
+                Cards[i] = GenerateCard();
+            }
         }
 
 
