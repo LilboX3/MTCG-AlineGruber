@@ -15,8 +15,8 @@ namespace MTCG.Models
 
         public Battle(User Player1, User Player2)
         {
-            this._player1 = Player1;
-            this._player2 = Player2;
+            _player1 = Player1;
+            _player2 = Player2;
         }
 
 

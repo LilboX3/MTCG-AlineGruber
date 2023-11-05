@@ -10,4 +10,9 @@ namespace MTCG.Models
     {
         Water, Fire, Normal
     }
+
+    enum Monster
+    {
+        Goblin, Dragon, Wizard, Ork, Knight, Kraken, Troll
+    }
 }

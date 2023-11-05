@@ -14,9 +14,13 @@ namespace MTCG.Models
             UserStack = new List<Card>();
         }
 
-        public Card GetCard(string Name)
+        public Card? GetCard(string Name)
         {
-            
+            foreach(Card card in UserStack)
+            {
+                if(card.Name == Name) return card;
+            }
+            return null;
         }
 
         public void RemoveCard()

@@ -11,9 +11,13 @@ namespace MTCG.Models
     {
         public Monster MonsterType { get; set; }
 
-        public MonsterCard(): base()
+        public MonsterCard(Monster monster, int damage, Element element): base(damage, element)
         {
-
+            MonsterType = monster;
+            Name = ElementType.ToString()+MonsterType.ToString();
         }
+
+       
+
     }
 }

@@ -9,5 +9,9 @@ namespace MTCG.Models
 {
     internal class SpellCard: Card
     {
+        public SpellCard(int damage, Element element): base(damage, element) 
+        {
+            Name = element.ToString() + "Spell";
+        }
     }
 }

@@ -6,15 +6,22 @@ using System.Threading.Tasks;
 
 namespace MTCG.Models
 {
-    internal class Card
+    internal abstract class Card
     {
         public int Damage { get; set; }
         public string Name { get; set; }
-
-        public Card(int damage, string name)
+        public Element ElementType { get; set; }
+        public Card(int damage, Element element)
         {
             Damage = damage;
-            Name = name;
+            ElementType = element;
+            Name = "";
+        }
+
+        public override string ToString()
+        {
+            string CardString = Name + ", damage:" + Damage;
+            return CardString;
         }
         
     }

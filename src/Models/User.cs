@@ -25,6 +25,7 @@ namespace MTCG.Models
             EloValue = 100;
             _userDeck = new Deck();
             _userStack = new Stack();
+            _battleDeck = new Deck();
             CurrentCard = null;
         }
 
