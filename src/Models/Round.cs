@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MTCG.Models
 {
-    internal class Round
+    public class Round
     {
     }
 }

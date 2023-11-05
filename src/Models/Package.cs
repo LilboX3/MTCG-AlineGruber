@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MTCG.Models
 {
-    internal class Package
+    public class Package
     {
         public Card[] Cards { get; set; }
         public Package() { 
@@ -36,7 +36,18 @@ namespace MTCG.Models
 
         public SpellCard GenerateRandomSpell()
         {
+            Random rand = new Random();
 
+            //get amount of element enums, generate a random element
+            var elementCount = Enum.GetNames(typeof(Element)).Length;
+            int elementIndex = rand.Next(0, elementCount);
+            Element element = (Element)elementIndex;
+
+            //multiplied by 5, max of 100 damage?
+            int damage = rand.Next(1, 21) * 5;
+            
+            SpellCard RandSpell = new SpellCard(damage, element);
+            return RandSpell;
         }
 
         public Card GenerateCard()
@@ -46,7 +57,8 @@ namespace MTCG.Models
 
             if(isSpell == 0) {
                 return GenerateRandomSpell();
-            } else
+            }
+            else
             {
                 return GenerateRandomMonster();
             }

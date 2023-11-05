@@ -7,7 +7,7 @@ using MTCG.Models;
 
 namespace MTCG.Models
 {
-    internal class SpellCard: Card
+    public class SpellCard: Card
     {
         public SpellCard(int damage, Element element): base(damage, element) 
         {

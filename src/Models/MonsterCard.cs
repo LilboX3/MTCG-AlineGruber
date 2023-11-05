@@ -7,7 +7,7 @@ using MTCG.Models;
 
 namespace MTCG.Models
 {
-    internal class MonsterCard: Card
+    public class MonsterCard: Card
     {
         public Monster MonsterType { get; set; }
 

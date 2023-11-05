@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MTCG.Models
 {
-    internal abstract class Card
+    public abstract class Card
     {
         public int Damage { get; set; }
         public string Name { get; set; }

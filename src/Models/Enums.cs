@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace MTCG.Models
 {
-    enum Element
+    public enum Element
     {
-        Water, Fire, Normal
+        Water, Fire, Regular
     }
 
-    enum Monster
+    public enum Monster
     {
         Goblin, Dragon, Wizard, Ork, Knight, Kraken, Troll
     }

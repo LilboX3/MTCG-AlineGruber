@@ -7,7 +7,7 @@ using MTCG.Models;
 
 namespace MTCG.Models
 {
-    internal class Battle
+    public class Battle
     {
         //Cannot change players during a battle!!
         private readonly User _player1;
