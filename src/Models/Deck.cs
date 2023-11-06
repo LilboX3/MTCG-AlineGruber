@@ -35,12 +35,17 @@ namespace MTCG.Models
             CardDeck.Add(card);
             _size++;
         }
-
-        public Card GetRandom()
+          
+        public Card GetRandom()  
         {
             Random rand = new Random();
             int index = rand.Next(0, _size);
             return CardDeck[index];
+        }
+
+        public void RemoveCard(string name)
+        {
+
         }
 
 

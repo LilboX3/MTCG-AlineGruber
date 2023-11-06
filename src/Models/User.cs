@@ -79,11 +79,18 @@ namespace MTCG.Models
                 Console.WriteLine("Your stack is empty. Consider buying a package!");
                 return;
             }
+
             Console.WriteLine("Your current Stack: ");
             Console.WriteLine(_userStack.ToString());
             Console.WriteLine("Choose the number of card you want to add to your deck: ");
             
             string choice = Console.ReadLine();
+
+            if(choice == null) {
+                Console.WriteLine("No card chosen: invalid input");
+                return;
+            }
+
             if (IsNumber(choice))
             {
 
@@ -94,7 +101,7 @@ namespace MTCG.Models
             
         }
 
-        private bool IsNumber(string text)
+        private static bool IsNumber(string text)
         {
             Regex regex = new Regex(@"^\d+$");
             return regex.IsMatch(text);
