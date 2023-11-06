@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\MonaL\\Documents\\StudiumFH\\3. Sem\\SWEN\\MTCG\\src\\MTCG.csproj": {}
+    "C:\\Users\\MonaL\\Documents\\FHTW\\3. Semester\\SWEN\\MTCG-AlineGruber\\src\\MTCG.csproj": {}
   },
   "projects": {
-    "C:\\Users\\MonaL\\Documents\\StudiumFH\\3. Sem\\SWEN\\MTCG\\src\\MTCG.csproj": {
+    "C:\\Users\\MonaL\\Documents\\FHTW\\3. Semester\\SWEN\\MTCG-AlineGruber\\src\\MTCG.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\MonaL\\Documents\\StudiumFH\\3. Sem\\SWEN\\MTCG\\src\\MTCG.csproj",
+        "projectUniqueName": "C:\\Users\\MonaL\\Documents\\FHTW\\3. Semester\\SWEN\\MTCG-AlineGruber\\src\\MTCG.csproj",
         "projectName": "MTCG",
-        "projectPath": "C:\\Users\\MonaL\\Documents\\StudiumFH\\3. Sem\\SWEN\\MTCG\\src\\MTCG.csproj",
+        "projectPath": "C:\\Users\\MonaL\\Documents\\FHTW\\3. Semester\\SWEN\\MTCG-AlineGruber\\src\\MTCG.csproj",
         "packagesPath": "C:\\Users\\MonaL\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\MonaL\\Documents\\StudiumFH\\3. Sem\\SWEN\\MTCG\\src\\obj\\",
+        "outputPath": "C:\\Users\\MonaL\\Documents\\FHTW\\3. Semester\\SWEN\\MTCG-AlineGruber\\src\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\MonaL\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -39,6 +39,16 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
+          "dependencies": {
+            "NUnit": {
+              "target": "Package",
+              "version": "[3.14.0, )"
+            },
+            "NuGet.Frameworks": {
+              "target": "Package",
+              "version": "[4.6.4, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -55,7 +65,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.306\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     }

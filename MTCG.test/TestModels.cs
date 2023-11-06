@@ -27,6 +27,8 @@ namespace MTCG.test
 
             Console.WriteLine(randCard.ToString());
 
+            Assert.That(randCard, Is.Not.Null);
+
         }
 
         [Test]
@@ -36,6 +38,7 @@ namespace MTCG.test
             for(int i = 0; i<package.Cards.Length; i++)
             {
                 Console.WriteLine(package.Cards[i].ToString());
+                Assert.That(package.Cards[i], Is.Not.Null);
             }
         }
 
@@ -53,6 +56,7 @@ namespace MTCG.test
             foreach(Card card in stack.UserStack)
             {
                 Console.WriteLine(card.ToString());
+                Assert.That(card, Is.Not.Null);
             }
         }
 

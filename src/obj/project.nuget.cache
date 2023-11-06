@@ -1,8 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "M+lC9rz5Imhm37ElFtnkr2agHZKw/jf3lZUlK1oqcZ0jmmEZGR7R5PVxj48v4oIx/PYvkng0ZBElAxNRQgd+1A==",
+  "dgSpecHash": "2Y8ebUN42nH6zCxH76fOAU7WWhlhvs0UeIWyWvYG2659MnlLUxGdTo/QhvXT9GRmD0siJ4jdSAAXlk9jaB3Sog==",
   "success": true,
-  "projectFilePath": "C:\\Users\\MonaL\\Documents\\StudiumFH\\3. Sem\\SWEN\\MTCG\\src\\MTCG.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "C:\\Users\\MonaL\\Documents\\FHTW\\3. Semester\\SWEN\\MTCG-AlineGruber\\src\\MTCG.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\MonaL\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "C:\\Users\\MonaL\\.nuget\\packages\\netstandard.library\\2.0.0\\netstandard.library.2.0.0.nupkg.sha512",
+    "C:\\Users\\MonaL\\.nuget\\packages\\nuget.frameworks\\4.6.4\\nuget.frameworks.4.6.4.nupkg.sha512",
+    "C:\\Users\\MonaL\\.nuget\\packages\\nunit\\3.14.0\\nunit.3.14.0.nupkg.sha512"
+  ],
   "logs": []
 }

@@ -13,4 +13,9 @@
     <Folder Include="HttpServer\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="NuGet.Frameworks" Version="4.6.4" />
+    <PackageReference Include="NUnit" Version="3.14.0" />
+  </ItemGroup>
+
 </Project>

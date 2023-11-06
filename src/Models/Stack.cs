@@ -25,8 +25,15 @@ namespace MTCG.Models
 
         public void RemoveCard(string Name)
         {
-
-            Size--;
+            for(int i=0; i < Size; i++)
+            {
+                if (UserStack[i].Name == Name)
+                {
+                    UserStack.RemoveAt(i);
+                    Size--;
+                    break;
+                }
+            }
         }
 
         public void AddCard(Card card)
@@ -45,6 +52,11 @@ namespace MTCG.Models
                 StackString += "\n";
             }
             return StackString;
+        }
+
+        public bool IndexInRange(int index)
+        {
+            return index >= 0 && index < UserStack.Count;
         }
     }
 }

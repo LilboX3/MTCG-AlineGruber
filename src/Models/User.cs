@@ -15,6 +15,7 @@ namespace MTCG.Models
         public Card? CurrentCard { get; set; }
 
         private Deck _userDeck;
+        //temp Deck for battles, to lose and win cards
         private Deck _battleDeck;
         private Stack _userStack;
             
@@ -80,23 +81,38 @@ namespace MTCG.Models
                 return;
             }
 
+            if (_userDeck.Size == 4)
+            {
+                Console.WriteLine("Deck full: you already have the maximum of 4 cards, remove one to make space");
+                return;
+            }
+
             Console.WriteLine("Your current Stack: ");
             Console.WriteLine(_userStack.ToString());
             Console.WriteLine("Choose the number of card you want to add to your deck: ");
             
             string choice = Console.ReadLine();
 
-            if(choice == null) {
-                Console.WriteLine("No card chosen: invalid input");
-                return;
-            }
-
             if (IsNumber(choice))
             {
+                int index = int.Parse(choice);
+                if (_userStack.IndexInRange(index)) {
 
+                    _userDeck.AddNewCard(_userStack.UserStack[index]);
+                    _battleDeck.AddNewCard(_userStack.UserStack[index]);
+
+                    _userStack.RemoveCard(_userStack.UserStack[index].Name);
+                    Console.WriteLine("Current deck: \n"+_userDeck.ToString());
+
+                } else
+                {
+                    Console.WriteLine("No card chosen: invalid index");
+                    return;
+                }
             } else
             {
-
+                Console.WriteLine("No card chosen: invalid input");
+                return;
             }
             
         }
@@ -106,8 +122,6 @@ namespace MTCG.Models
             Regex regex = new Regex(@"^\d+$");
             return regex.IsMatch(text);
         }
-
-
 
 
     }

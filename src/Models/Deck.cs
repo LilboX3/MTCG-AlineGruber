@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -10,11 +11,11 @@ namespace MTCG.Models
     public class Deck
     {
         public List<Card> CardDeck { get; set; }
-        private int _size;
+        public int Size { get; set; }
 
         public Deck() { 
             CardDeck = new List<Card>();
-            _size = 0;
+            Size = 0;
         }
 
         public void AddNewCard(Card card)
@@ -26,26 +27,38 @@ namespace MTCG.Models
                 return;
             }
             CardDeck.Add(card);
-            _size++; 
+            Size++; 
 
         }
 
         public void AddOpponentCard(Card card)
         {
             CardDeck.Add(card);
-            _size++;
+            Size++;
         }
           
         public Card GetRandom()  
         {
             Random rand = new Random();
-            int index = rand.Next(0, _size);
+            int index = rand.Next(0, Size);
             return CardDeck[index];
         }
 
         public void RemoveCard(string name)
         {
 
+        }
+
+        public override string ToString()
+        {
+            string DeckString = "";
+            for (int i = 0; i < Size; i++)
+            {
+                DeckString += i.ToString() + ". ";
+                DeckString += CardDeck[i].ToString();
+                DeckString += "\n";
+            }
+            return DeckString;
         }
 
 
