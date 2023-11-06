@@ -117,6 +117,18 @@ namespace MTCG.Models
             
         }
 
+        public void RemoveFromDeck()
+        {
+            if (_userDeck.Size == 0)
+            {
+                Console.WriteLine("Your deck is empty! Buy a package and add cards from your stack");
+                return;
+            }
+
+            Console.WriteLine(_userDeck.ToString());
+
+        }
+
         private static bool IsNumber(string text)
         {
             Regex regex = new Regex(@"^\d+$");
