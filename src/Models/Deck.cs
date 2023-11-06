@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace MTCG.Models
 {
@@ -20,7 +21,7 @@ namespace MTCG.Models
 
         public void AddNewCard(Card card)
         {
-            if(CardDeck.Count > 4)
+            if(Size > 4)
             {
                 //some kinda error?
                 Console.WriteLine("Only 4 cards can be added to the starting deck!");
@@ -44,9 +45,10 @@ namespace MTCG.Models
             return CardDeck[index];
         }
 
-        public void RemoveCard(string name)
+        public void RemoveCard(Card toRemove)
         {
-
+            CardDeck.Remove(toRemove);
+            Size--;
         }
 
         public override string ToString()
@@ -59,6 +61,11 @@ namespace MTCG.Models
                 DeckString += "\n";
             }
             return DeckString;
+        }
+
+        public bool IndexInRange(int index)
+        {
+            return index >= 0 && index < Size;
         }
 
 

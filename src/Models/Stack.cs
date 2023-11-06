@@ -23,17 +23,12 @@ namespace MTCG.Models
             return null;
         }
 
-        public void RemoveCard(string Name)
+        public void RemoveCard(Card toRemove)
         {
-            for(int i=0; i < Size; i++)
-            {
-                if (UserStack[i].Name == Name)
-                {
-                    UserStack.RemoveAt(i);
-                    Size--;
-                    break;
-                }
-            }
+            if(toRemove == null) return;
+
+            UserStack.Remove(toRemove);
+            Size--;
         }
 
         public void AddCard(Card card)

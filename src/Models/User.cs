@@ -101,7 +101,7 @@ namespace MTCG.Models
                     _userDeck.AddNewCard(_userStack.UserStack[index]);
                     _battleDeck.AddNewCard(_userStack.UserStack[index]);
 
-                    _userStack.RemoveCard(_userStack.UserStack[index].Name);
+                    _userStack.RemoveCard(_userStack.UserStack[index]);
                     Console.WriteLine("Current deck: \n"+_userDeck.ToString());
 
                 } else
@@ -119,13 +119,39 @@ namespace MTCG.Models
 
         public void RemoveFromDeck()
         {
-            if (_userDeck.Size == 0)
+            if (_userDeck.Size <= 0)
             {
                 Console.WriteLine("Your deck is empty! Buy a package and add cards from your stack");
                 return;
             }
 
+            Console.WriteLine("Choose a card you want to remove from your deck");
             Console.WriteLine(_userDeck.ToString());
+            string choice = Console.ReadLine();
+            if (IsNumber(choice))
+            {
+                int index = int.Parse(choice);
+                if (_userDeck.IndexInRange(index))
+                {
+                    Card toRemove = _userDeck.CardDeck[index];
+                    _userDeck.RemoveCard(toRemove);
+                    _battleDeck.RemoveCard(toRemove);
+                    _userStack.AddCard(toRemove);
+                    Console.WriteLine("Current deck: \n" + _userDeck.ToString());
+                    Console.WriteLine("Current stack: \n" + _userStack.ToString());
+
+                }
+                else
+                {
+                    Console.WriteLine("No card chosen: invalid index");
+                    return;
+                }
+            }
+            else
+            {
+                Console.WriteLine("No card chosen: invalid input");
+                return;
+            }
 
         }
 

@@ -8,11 +8,11 @@ namespace MTCG
         {
 
             User Player1 = new User("Lalong", "123");
-            //Player1.BuyPackage();
-            Player1.ChooseDeck();
             Player1.BuyPackage();
             Player1.ChooseDeck();
             Player1.ChooseDeck();
+            Player1.ChooseDeck();
+            Player1.RemoveFromDeck();
             //Max 100 rounds
             //Randomly chooses cards of user
             //ADD A UNIQUE FEATURE (additional booster for 1 round to 1dotnet add package Npgsql --version 7.0.6 card, spells…)

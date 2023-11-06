@@ -13,6 +13,9 @@ namespace MTCG.Models
         private readonly User _player1;
         private readonly User _player2;
 
+        public int Player1Wins { get; set; } = 0;
+        public int Player2Wins { get; set; } = 0;
+
         public Battle(User Player1, User Player2)
         {
             _player1 = Player1;
