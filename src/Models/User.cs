@@ -32,6 +32,10 @@ namespace MTCG.Models
 
         public void BuyPackage()
         {
+            if(Coins < 5)
+            {
+                Console.WriteLine("You only have " + Coins + " coins! You need 5 to buy a package.");
+            }
             Package Bought = new Package();
             Coins -= 5;
             AddToStack(Bought);
@@ -49,11 +53,13 @@ namespace MTCG.Models
         public void LoseElo()
         {
             EloValue -= 5;
+            _battleDeck = _userDeck;
         }
 
         public void WinElo()
         {
             EloValue += 3;
+            _battleDeck = _userDeck;
         }
 
         public Card PlayCard()
@@ -68,9 +74,20 @@ namespace MTCG.Models
             {
                 throw new Exception("Current Card of player is null!");
             }
+
             Card temp = CurrentCard;
+            _battleDeck.RemoveCard(temp);
             CurrentCard = null;
             return temp;
+        }
+
+        public void WinCard(Card wonCard)
+        {
+            if(wonCard == null)
+            {
+                throw new Exception("Won card is null!");
+            }
+            _battleDeck.AddOpponentCard(wonCard);
         }
         
         public void ChooseDeck()
@@ -88,7 +105,7 @@ namespace MTCG.Models
             }
 
             Console.WriteLine("Your current Stack: ");
-            Console.WriteLine(_userStack.ToString());
+            PrintStack();
             Console.WriteLine("Choose the number of card you want to add to your deck: ");
             
             string choice = Console.ReadLine();
@@ -102,7 +119,8 @@ namespace MTCG.Models
                     _battleDeck.AddNewCard(_userStack.UserStack[index]);
 
                     _userStack.RemoveCard(_userStack.UserStack[index]);
-                    Console.WriteLine("Current deck: \n"+_userDeck.ToString());
+                    Console.WriteLine("Current deck:");
+                    PrintDeck();
 
                 } else
                 {
@@ -126,8 +144,9 @@ namespace MTCG.Models
             }
 
             Console.WriteLine("Choose a card you want to remove from your deck");
-            Console.WriteLine(_userDeck.ToString());
+            PrintDeck();
             string choice = Console.ReadLine();
+
             if (IsNumber(choice))
             {
                 int index = int.Parse(choice);
@@ -137,9 +156,11 @@ namespace MTCG.Models
                     _userDeck.RemoveCard(toRemove);
                     _battleDeck.RemoveCard(toRemove);
                     _userStack.AddCard(toRemove);
-                    Console.WriteLine("Current deck: \n" + _userDeck.ToString());
-                    Console.WriteLine("Current stack: \n" + _userStack.ToString());
 
+                    Console.WriteLine("Current deck:");
+                    PrintDeck();
+                    Console.WriteLine("Current stack:");
+                    PrintStack();
                 }
                 else
                 {
@@ -161,6 +182,20 @@ namespace MTCG.Models
             return regex.IsMatch(text);
         }
 
+        public void PrintDeck()
+        {
+            Console.WriteLine(_userDeck.ToString());
+        }
+
+        public void PrintStack()
+        {
+            Console.WriteLine(_userStack.ToString());
+        }
+
+        public void PrintBattleDeck()
+        {
+            Console.WriteLine(_battleDeck.ToString());
+        }
 
     }
 }
