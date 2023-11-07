@@ -22,6 +22,14 @@ namespace MTCG.Models
             _player2 = Player2;
         }
 
+        public User PlayBattle()
+        {
+            for(int i = 0; i < 100; i++)
+            {
+
+            }
+        }
+
 
 
     }

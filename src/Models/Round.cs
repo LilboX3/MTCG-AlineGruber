@@ -17,5 +17,19 @@ namespace MTCG.Models
             _player1 = player1;
             _player2 = player2;
         }
+
+        public User PlayRound()
+        {
+            //Set up random cards of players
+            Card player1Card = _player1.PlayCard();
+            Card player2Card = _player2.PlayCard();
+
+
+        }
+
+        public string ToString()
+        {
+
+        }
     }
 }

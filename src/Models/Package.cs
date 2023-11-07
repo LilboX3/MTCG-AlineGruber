@@ -9,7 +9,7 @@ namespace MTCG.Models
     public class Package
     {
         public Card[] Cards { get; set; }
-        public Package() { 
+        public Package() {
             Cards = new Card[5];
             GeneratePackage();
         }
