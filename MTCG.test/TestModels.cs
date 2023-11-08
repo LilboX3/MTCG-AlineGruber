@@ -19,6 +19,16 @@ namespace MTCG.test
         }
 
         [Test]
+        public void TestUserCreation()
+        {
+            Credentials credentials = new Credentials("testuser", "testpassword");
+            User testUser = new User(credentials.Username, credentials.Password);
+
+            Assert.That(testUser, Is.Not.Null);
+            Assert.That(testUser.UserCredentials, Is.EqualTo(credentials));
+        }
+
+        [Test]
         public void TestRandomCards()
         {
             Package testPackage = new Package();

@@ -26,7 +26,15 @@ namespace MTCG.Models
         {
             for(int i = 0; i < 100; i++)
             {
-
+                Round newRound = new Round(_player1, _player2);
+                if(newRound.Winner == _player1)
+                {
+                    Player1Wins++;
+                }
+                else
+                {
+                    Player2Wins++;
+                }
             }
         }
 
