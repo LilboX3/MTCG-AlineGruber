@@ -46,25 +46,26 @@ namespace MTCG.Models
 
         }
 
-        public User SpellRound(SpellCard player1Card, SpellCard player2Card)
+        public User? SpellRound(SpellCard player1Card, SpellCard player2Card)
         {
             
            
         }
 
-        public User MixedRound(Card player1Card, Card player2Card)
+        public User? MixedRound(Card player1Card, Card player2Card)
         {
 
         }
 
-        public User MonsterRound(MonsterCard player1Card, MonsterCard player2Card)
+        public User? MonsterRound(MonsterCard player1Card, MonsterCard player2Card)
         {
+            
 
         }
 
         public int ElementDamage(Element element, Element counter)
         {
-
+            
         }
 
     }

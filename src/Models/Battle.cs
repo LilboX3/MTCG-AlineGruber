@@ -31,9 +31,12 @@ namespace MTCG.Models
                 {
                     Player1Wins++;
                 }
-                else
+                else if(newRound.Winner == _player2)
                 {
                     Player2Wins++;
+                } else
+                {
+                    //draw
                 }
             }
         }

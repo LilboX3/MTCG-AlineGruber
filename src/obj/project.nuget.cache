@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "2Y8ebUN42nH6zCxH76fOAU7WWhlhvs0UeIWyWvYG2659MnlLUxGdTo/QhvXT9GRmD0siJ4jdSAAXlk9jaB3Sog==",
+  "dgSpecHash": "rPVHDG4A/lgYoRAbZ5yZ7s32uFQqvVsH7HgSmny36e4DnBPltkmMRA3tpUsI39WlffNRqdrcVvpGrpYjceNR3w==",
   "success": true,
-  "projectFilePath": "C:\\Users\\MonaL\\Documents\\FHTW\\3. Semester\\SWEN\\MTCG-AlineGruber\\src\\MTCG.csproj",
+  "projectFilePath": "C:\\Users\\MonaL\\Documents\\StudiumFH\\3.Semester\\SWEN\\MTCG\\src\\MTCG.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\MonaL\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
     "C:\\Users\\MonaL\\.nuget\\packages\\netstandard.library\\2.0.0\\netstandard.library.2.0.0.nupkg.sha512",
