@@ -17,6 +17,10 @@ namespace MTCG.Models
         public string RoundLog { get; set; }
         public Round(User player1, User player2)
         {
+            if(_player1 == null || _player2 == null)
+            {
+                throw new ArgumentNullException("player is null!");
+            }
             _player1 = player1;
             _player2 = player2;
             RoundLog = "";
@@ -50,13 +54,17 @@ namespace MTCG.Models
 
         public User? SpellRound(SpellCard player1Card, SpellCard player2Card)
         {
-            
-           
+            SpellCard? winnerCard;
+
+            winnerCard = player1Card.PlaySpellRound(player2Card);
+
+            //Decide winning player
+            return WinningPlayer(winnerCard, player1Card, player2Card);
         }
 
         public User? MixedRound(Card player1Card, Card player2Card)
         {
-            Card? winnerCard = null;
+            Card? winnerCard;
             RuleHandler ruleHandler = new RuleHandler(player1Card, player2Card);
             //TODO: 
             if (ruleHandler.MixedRuleApplies())
@@ -64,14 +72,26 @@ namespace MTCG.Models
                 winnerCard = ruleHandler.PlayMixedRule();
             } else
             {
-                
+                if(player1Card is MonsterCard)
+                {
+                    var p1 = player1Card as MonsterCard;
+                    var p2 = player2Card as SpellCard;
+                    winnerCard = p1.PlayAgainstSpell(p2);
+                    
+                } else
+                {
+                    var p1 = player1Card as SpellCard;
+                    var p2 = player2Card as MonsterCard;
+                    winnerCard = p1.PlayAgainstMonster(p2);
+                }
             }
-            return null;
+            //Decide winning player
+            return WinningPlayer(winnerCard, player1Card, player2Card);
         }
 
         public User? MonsterRound(MonsterCard player1Card, MonsterCard player2Card)
         {
-            MonsterCard? winnerCard = null;
+            MonsterCard? winnerCard;
             RuleHandler ruleHandler = new RuleHandler(player1Card, player2Card);
             //Apply extra rules
             if (ruleHandler.MonsterRuleApplies())
@@ -83,15 +103,26 @@ namespace MTCG.Models
             }
 
             //Decide winning player
-            if(winnerCard == player1Card)
+            return WinningPlayer(winnerCard, player1Card, player2Card);
+        }
+
+        public User? WinningPlayer(Card winnerCard, Card player1Card, Card player2Card)
+        {
+            //If draw
+            if(winnerCard == null)
+            {
+                return null;
+            }
+            //Decide winning player
+            else if (winnerCard == player1Card)
             {
                 return _player1;
-            } 
-            else if(winnerCard == player2Card)
+            }
+            else if (winnerCard == player2Card)
             {
                 return _player2;
             }
-            //If draw
+
             return null;
         }
 

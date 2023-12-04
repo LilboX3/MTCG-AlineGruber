@@ -19,6 +19,12 @@ namespace MTCG.Models
 
         public MonsterCard? PlayMonsterRound(MonsterCard opponent)
         {
+
+            return null;
+        }
+
+        public Card? PlayAgainstSpell(SpellCard opponent)
+        {
             return null;
         }
 
