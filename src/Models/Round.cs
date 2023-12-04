@@ -58,6 +58,15 @@ namespace MTCG.Models
         {
             Card? winnerCard = null;
             RuleHandler ruleHandler = new RuleHandler(player1Card, player2Card);
+            //TODO: 
+            if (ruleHandler.MixedRuleApplies())
+            {
+                winnerCard = ruleHandler.PlayMixedRule();
+            } else
+            {
+                
+            }
+            return null;
         }
 
         public User? MonsterRound(MonsterCard player1Card, MonsterCard player2Card)
@@ -86,15 +95,6 @@ namespace MTCG.Models
             return null;
         }
 
-        public string GenerateKey(MonsterCard player1Card, MonsterCard player2Card)
-        {
-
-        }
-
-        public int ElementDamage(Element element, Element counter)
-        {
-               
-        }
 
     }
 }

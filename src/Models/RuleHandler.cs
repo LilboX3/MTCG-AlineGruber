@@ -8,8 +8,8 @@ namespace MTCG.Models
 {
     internal class RuleHandler
     {
-        public Card player1Card { get; set; }
-        public Card player2Card { get; set;}
+        public Card Player1Card { get; set; }
+        public Card Player2Card { get; set;}
         private Card? _winningCard;
 
         public RuleHandler(Card player1, Card player2)
@@ -18,15 +18,15 @@ namespace MTCG.Models
             {
                 throw new ArgumentNullException("A card is null!");
             }
-            this.player1Card = player1;
-            this.player2Card = player2;
+            this.Player1Card = player1;
+            this.Player2Card = player2;
             _winningCard = null;
         }
 
         public bool MonsterRuleApplies()
         {
-            var p1 = player1Card as MonsterCard;
-            var p2 = player2Card as MonsterCard;
+            var p1 = Player1Card as MonsterCard;
+            var p2 = Player2Card as MonsterCard;
 
             if (p1.MonsterType == Monster.Goblin && p2.MonsterType == Monster.Dragon)
             {
@@ -64,33 +64,54 @@ namespace MTCG.Models
 
         public bool MixedRuleApplies()
         {
-            if(player1Card is MonsterCard) {
-                var p1 = player1Card as MonsterCard;
-                var p2 = player2Card as SpellCard;
-
+            if(Player1Card is MonsterCard) {
+                var p1 = Player1Card as MonsterCard;
+                var p2 = Player2Card as SpellCard;
+                if (p1.MonsterType == Monster.Kraken)
+                {
+                    _winningCard = p1;
+                    return true;
+                }
+                else if(p1.MonsterType == Monster.Knight && p2.ElementType == Element.Water)
+                {
+                    _winningCard = p2;
+                    return true;
+                }
             } 
             else
             {
-                var p1 = player1Card as SpellCard;
-                var p2 = player2Card as MonsterCard;
+                var p1 = Player1Card as SpellCard;
+                var p2 = Player2Card as MonsterCard;
+                if(p2.MonsterType == Monster.Kraken)
+                {
+                    _winningCard = p2;
+                }
+                else if(p2.MonsterType == Monster.Knight && p1.ElementType == Element.Water)
+                {
+                    _winningCard = p1;
+                }
             }
 
             return false;
         }
 
-        public MonsterCard? PlayMonsterRule()
-        {   
+        public MonsterCard PlayMonsterRule()
+        {
+            if (_winningCard==null)
+            {
+                throw new ArgumentNullException("Winning card is null!");
+            }
             return _winningCard as MonsterCard;
         }
 
-        public Card? PlayMixedRule()
+        public Card PlayMixedRule()
         {
-            if(_winningCard is MonsterCard)
+            if (_winningCard == null)
             {
-                return _winningCard as MonsterCard;
+                throw new ArgumentNullException("Winning card is null!");
             }
 
-            return _winningCard as SpellCard;
+            return _winningCard;
             
         }
 
