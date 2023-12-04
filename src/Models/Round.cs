@@ -11,6 +11,8 @@ namespace MTCG.Models
         //Cannot change players during a round!!
         private readonly User _player1;
         private readonly User _player2;
+
+        //Null if theres a draw
         public User? Winner { get; set; }
         public string RoundLog { get; set; }
         public Round(User player1, User player2)
@@ -54,18 +56,44 @@ namespace MTCG.Models
 
         public User? MixedRound(Card player1Card, Card player2Card)
         {
-
+            Card? winnerCard = null;
+            RuleHandler ruleHandler = new RuleHandler(player1Card, player2Card);
         }
 
         public User? MonsterRound(MonsterCard player1Card, MonsterCard player2Card)
         {
-            
+            MonsterCard? winnerCard = null;
+            RuleHandler ruleHandler = new RuleHandler(player1Card, player2Card);
+            //Apply extra rules
+            if (ruleHandler.MonsterRuleApplies())
+            {
+                winnerCard = ruleHandler.PlayMonsterRule();
+            } else
+            {
+                winnerCard = player1Card.PlayMonsterRound(player2Card);
+            }
+
+            //Decide winning player
+            if(winnerCard == player1Card)
+            {
+                return _player1;
+            } 
+            else if(winnerCard == player2Card)
+            {
+                return _player2;
+            }
+            //If draw
+            return null;
+        }
+
+        public string GenerateKey(MonsterCard player1Card, MonsterCard player2Card)
+        {
 
         }
 
         public int ElementDamage(Element element, Element counter)
         {
-            
+               
         }
 
     }

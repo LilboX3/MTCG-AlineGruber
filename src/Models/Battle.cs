@@ -36,7 +36,7 @@ namespace MTCG.Models
                     Player2Wins++;
                 } else
                 {
-                    //draw
+                    //draw if Winner is null
                 }
             }
         }

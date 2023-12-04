@@ -45,3 +45,11 @@ C:\Users\MonaL\Documents\FHTW\3. Semester\SWEN\MTCG-AlineGruber\src\bin\Debug\ne
 C:\Users\MonaL\Documents\FHTW\3. Semester\SWEN\MTCG-AlineGruber\src\obj\Debug\net6.0\MTCG.csproj.AssemblyReference.cache
 C:\Users\MonaL\Documents\FHTW\3. Semester\SWEN\MTCG-AlineGruber\src\obj\Debug\net6.0\MTCG.csproj.CopyComplete
 C:\Users\MonaL\Documents\FHTW\3. Semester\SWEN\MTCG-AlineGruber\src\bin\Debug\net6.0\nunit.framework.dll
+C:\Users\MonaL\Documents\StudiumFH\3.Semester\SWEN\MTCG\src\obj\Debug\net6.0\MTCG.csproj.AssemblyReference.cache
+C:\Users\MonaL\Documents\StudiumFH\3.Semester\SWEN\MTCG\src\obj\Debug\net6.0\MTCG.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\MonaL\Documents\StudiumFH\3.Semester\SWEN\MTCG\src\obj\Debug\net6.0\MTCG.AssemblyInfoInputs.cache
+C:\Users\MonaL\Documents\StudiumFH\3.Semester\SWEN\MTCG\src\obj\Debug\net6.0\MTCG.AssemblyInfo.cs
+C:\Users\MonaL\Documents\StudiumFH\3.Semester\SWEN\MTCG\src\obj\Debug\net6.0\MTCG.csproj.CoreCompileInputs.cache
+C:\Users\MonaL\Documents\StudiumFH\3.Semester\SWEN\MTCG\src\obj\Debug\net6.0\MTCG.dll
+C:\Users\MonaL\Documents\StudiumFH\3.Semester\SWEN\MTCG\src\obj\Debug\net6.0\refint\MTCG.dll
+C:\Users\MonaL\Documents\StudiumFH\3.Semester\SWEN\MTCG\src\obj\Debug\net6.0\MTCG.pdb

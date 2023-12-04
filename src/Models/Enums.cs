@@ -13,6 +13,6 @@ namespace MTCG.Models
 
     public enum Monster
     {
-        Goblin, Dragon, Wizard, Ork, Knight, Kraken, Troll
+        Goblin, Dragon, Wizzard, Ork, Knight, Kraken, Troll, Elf
     }
 }
