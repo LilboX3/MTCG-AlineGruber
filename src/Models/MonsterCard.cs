@@ -17,16 +17,5 @@ namespace MTCG.Models
             Name = ElementType.ToString()+MonsterType.ToString();
         }
 
-        public MonsterCard? PlayMonsterRound(MonsterCard opponent)
-        {
-
-            return null;
-        }
-
-        public Card? PlayAgainstSpell(SpellCard opponent)
-        {
-            return null;
-        }
-
     }
 }

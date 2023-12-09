@@ -15,6 +15,7 @@ namespace MTCG.Models
 
         public int Player1Wins { get; set; } = 0;
         public int Player2Wins { get; set; } = 0;
+        public string BattleLog { get; set; } = "";
 
         public Battle(User Player1, User Player2)
         {
@@ -27,6 +28,14 @@ namespace MTCG.Models
             for(int i = 0; i < 100; i++)
             {
                 Round newRound = new Round(_player1, _player2);
+
+                newRound.PlayRound();
+                //Draw
+                if(newRound.Winner == null)
+                {
+                    continue;
+                }
+                //Decide Winner
                 if(newRound.Winner == _player1)
                 {
                     Player1Wins++;
@@ -34,14 +43,23 @@ namespace MTCG.Models
                 else if(newRound.Winner == _player2)
                 {
                     Player2Wins++;
-                } else
-                {
-                    //draw if Winner is null
                 }
+                //Update Battle log with round
+                UpdateBattleLog(newRound.RoundLog);
             }
+
         }
 
+        public void UpdateBattleLog(string roundLog)
+        {
+            BattleLog += roundLog + "\n";
+        }
 
+        public bool PlayerLost()
+        {
+            if(_player1.)
+            return false;
+        }
 
     }
 }

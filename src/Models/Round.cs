@@ -14,6 +14,7 @@ namespace MTCG.Models
 
         //Null if theres a draw
         public User? Winner { get; set; }
+        public User? Loser { get; set; }
         public string RoundLog { get; set; }
         public Round(User player1, User player2)
         {
@@ -25,7 +26,8 @@ namespace MTCG.Models
             _player2 = player2;
             RoundLog = "";
         }
-
+        //TODO: Gewinner bekommt Karte
+        //TODO: Round log schreiben
         public void PlayRound()
         {
             //Set up random cards of players
@@ -50,43 +52,83 @@ namespace MTCG.Models
                 Winner = MixedRound(player1Card, player2Card);
             }
 
+            //Loser loses his card
+            if(Winner != null)
+            {
+                CardGain();
+            }
+
+        }
+        //Winner gets card from loser
+        public void CardGain()
+        {
+            if (Loser == null)
+            {
+                throw new ArgumentNullException("Loser is null!");
+            }
+            Card lostCard = Loser.LoseCard();
+            Winner.WinCard(lostCard);
         }
 
+        //Normal spell round
         public User? SpellRound(SpellCard player1Card, SpellCard player2Card)
         {
             SpellCard? winnerCard;
 
-            winnerCard = player1Card.PlaySpellRound(player2Card);
+            winnerCard = PlaySpellRound(player1Card, player2Card);
 
             //Decide winning player
             return WinningPlayer(winnerCard, player1Card, player2Card);
+        }
+
+        private SpellCard? PlaySpellRound(SpellCard player1Card, SpellCard player2Card)
+        {
+            int card1Damage = player1Card.CalcDamageAgainst(player2Card.ElementType);
+            int card2Damage = player2Card.CalcDamageAgainst(player1Card.ElementType);
+
+            if(card1Damage > card2Damage)
+            {
+                return player1Card;
+            }
+            else if(card2Damage > card1Damage)
+            {
+                return player2Card;
+            }
+            //same damage
+            return null;
         }
 
         public User? MixedRound(Card player1Card, Card player2Card)
         {
             Card? winnerCard;
             RuleHandler ruleHandler = new RuleHandler(player1Card, player2Card);
-            //TODO: 
+            
             if (ruleHandler.MixedRuleApplies())
             {
                 winnerCard = ruleHandler.PlayMixedRule();
             } else
             {
-                if(player1Card is MonsterCard)
-                {
-                    var p1 = player1Card as MonsterCard;
-                    var p2 = player2Card as SpellCard;
-                    winnerCard = p1.PlayAgainstSpell(p2);
-                    
-                } else
-                {
-                    var p1 = player1Card as SpellCard;
-                    var p2 = player2Card as MonsterCard;
-                    winnerCard = p1.PlayAgainstMonster(p2);
-                }
+                winnerCard = PlayMixedRound(player1Card, player2Card);
             }
             //Decide winning player
             return WinningPlayer(winnerCard, player1Card, player2Card);
+        }
+
+        private Card? PlayMixedRound(Card player1Card, Card player2Card)
+        {
+            int card1Damage = player1Card.CalcDamageAgainst(player2Card.ElementType);
+            int card2Damage = player2Card.CalcDamageAgainst(player1Card.ElementType);
+
+            if (card1Damage > card2Damage)
+            {
+                return player1Card;
+            }
+            else if (card2Damage > card1Damage)
+            {
+                return player2Card;
+            }
+            //same damage
+            return null;
         }
 
         public User? MonsterRound(MonsterCard player1Card, MonsterCard player2Card)
@@ -99,14 +141,28 @@ namespace MTCG.Models
                 winnerCard = ruleHandler.PlayMonsterRule();
             } else
             {
-                winnerCard = player1Card.PlayMonsterRound(player2Card);
+                winnerCard = PlayMonsterRound(player1Card, player2Card);
             }
 
             //Decide winning player
             return WinningPlayer(winnerCard, player1Card, player2Card);
         }
+        //Normal Monster round
+        private MonsterCard? PlayMonsterRound(MonsterCard player1Card, MonsterCard player2Card)
+        {
+            if(player1Card.Damage > player2Card.Damage)
+            {
+                return player1Card;
+            }
+            else if(player2Card.Damage > player1Card.Damage)
+            {
+                return player2Card;
+            }
+            //Same damage: draw
+            return null;
+        }
 
-        public User? WinningPlayer(Card winnerCard, Card player1Card, Card player2Card)
+        public User? WinningPlayer(Card? winnerCard, Card player1Card, Card player2Card)
         {
             //If draw
             if(winnerCard == null)
@@ -116,10 +172,12 @@ namespace MTCG.Models
             //Decide winning player
             else if (winnerCard == player1Card)
             {
+                Loser = _player2;
                 return _player1;
             }
             else if (winnerCard == player2Card)
             {
+                Loser = _player1;
                 return _player2;
             }
 

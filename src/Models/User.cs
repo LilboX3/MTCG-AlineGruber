@@ -72,7 +72,7 @@ namespace MTCG.Models
         {
             if(CurrentCard == null)
             {
-                throw new Exception("Current Card of player is null!");
+                throw new ArgumentNullException("Current Card of player is null!");
             }
 
             Card temp = CurrentCard;
@@ -85,7 +85,7 @@ namespace MTCG.Models
         {
             if(wonCard == null)
             {
-                throw new Exception("Won card is null!");
+                throw new ArgumentNullException("Won card is null!");
             }
             _battleDeck.AddOpponentCard(wonCard);
         }
@@ -197,5 +197,13 @@ namespace MTCG.Models
             Console.WriteLine(_battleDeck.ToString());
         }
 
+        public bool DeckIsEmpty()
+        {
+            if(_battleDeck.Size == 0)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }
