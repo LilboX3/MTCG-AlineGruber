@@ -10,15 +10,27 @@ namespace MTCG
             User Player1 = new User("Lalong", "123");
             User Player2 = new User("Goon", "123");
             Player1.BuyPackage();
-            Player1.ChooseDeck();
+            for(int i = 0; i < 4; i++) {
+                Player1.ChooseDeck();
+            }
+            
             Player2.BuyPackage();
-            Player2.ChooseDeck();
+            for (int i = 0; i < 4; i++)
+            {
+                Player2.ChooseDeck();
+            }
+            
 
-            Card Current1 = Player1.PlayCard();
-            Console.WriteLine(Player1.CurrentCard.ToString());
-            Card Lost = Player1.LoseCard();
-            Console.WriteLine(Lost.ToString());
-            Player2.WinCard(Lost);
+            Battle newBattle = new Battle(Player1, Player2);
+            User Winner = newBattle.PlayBattle();
+            Console.WriteLine(newBattle.BattleLog);
+            if (Winner == null)
+            {
+                Console.WriteLine("it was a draw!");
+            } else
+            {
+                Console.WriteLine("~~~~~~~~~ The winner is " + Winner.UserCredentials.Username + " ~~~~~~~~");
+            }
             
             //Max 100 rounds
             //Randomly chooses cards of user

@@ -64,7 +64,7 @@ namespace MTCG.Models
 
         public Card PlayCard()
         {
-            CurrentCard = _userDeck.GetRandom();
+            CurrentCard = _battleDeck.GetRandom();
             return CurrentCard;
         }
 

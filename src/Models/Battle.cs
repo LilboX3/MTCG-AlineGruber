@@ -19,16 +19,24 @@ namespace MTCG.Models
 
         public Battle(User Player1, User Player2)
         {
+            if(Player1 == null || Player2 == null)
+            {
+                throw new ArgumentNullException("Battle player is not set");
+            }
             _player1 = Player1;
             _player2 = Player2;
         }
 
-        public User PlayBattle()
+        public User? PlayBattle()
         {
             for(int i = 0; i < 100; i++)
             {
-                Round newRound = new Round(_player1, _player2);
+                if (PlayerLost())
+                {
+                    break;
+                }
 
+                Round newRound = new Round(_player1, _player2);
                 newRound.PlayRound();
                 //Draw
                 if(newRound.Winner == null)
@@ -47,7 +55,21 @@ namespace MTCG.Models
                 //Update Battle log with round
                 UpdateBattleLog(newRound.RoundLog);
             }
+            return DecideWinner();
+        }
 
+        public User? DecideWinner()
+        {
+            if(Player1Wins > Player2Wins)
+            {
+                return _player1;
+            }
+            else if(Player2Wins > Player1Wins)
+            {
+                return _player2;
+            }
+            //no winner
+            return null;
         }
 
         public void UpdateBattleLog(string roundLog)
@@ -57,7 +79,10 @@ namespace MTCG.Models
 
         public bool PlayerLost()
         {
-            if(_player1.)
+            if (_player1.DeckIsEmpty()||_player2.DeckIsEmpty())
+            {
+                return true;
+            }
             return false;
         }
 

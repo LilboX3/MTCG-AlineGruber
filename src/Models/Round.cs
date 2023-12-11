@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NUnit.Framework.Internal;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,7 +19,7 @@ namespace MTCG.Models
         public string RoundLog { get; set; }
         public Round(User player1, User player2)
         {
-            if(_player1 == null || _player2 == null)
+            if(player1 == null || player2 == null)
             {
                 throw new ArgumentNullException("player is null!");
             }
@@ -66,7 +67,12 @@ namespace MTCG.Models
             {
                 throw new ArgumentNullException("Loser is null!");
             }
+            //Debugging try
+            Console.WriteLine("**********Loser Deck BEFORE**********\n" );
+            Loser.PrintBattleDeck();
             Card lostCard = Loser.LoseCard();
+            Console.WriteLine("**********Loser Deck AFTER**********\n");
+            Loser.PrintBattleDeck();
             Winner.WinCard(lostCard);
         }
 
@@ -85,17 +91,19 @@ namespace MTCG.Models
         {
             int card1Damage = player1Card.CalcDamageAgainst(player2Card.ElementType);
             int card2Damage = player2Card.CalcDamageAgainst(player1Card.ElementType);
+            SpellCard? winnerCard = null;
 
             if(card1Damage > card2Damage)
             {
-                return player1Card;
+                winnerCard = player1Card;
             }
             else if(card2Damage > card1Damage)
             {
-                return player2Card;
+                winnerCard = player2Card;
             }
+            BuildElementLog(winnerCard, player1Card, player2Card, card1Damage, card2Damage);
             //same damage
-            return null;
+            return winnerCard;
         }
 
         public User? MixedRound(Card player1Card, Card player2Card)
@@ -106,6 +114,7 @@ namespace MTCG.Models
             if (ruleHandler.MixedRuleApplies())
             {
                 winnerCard = ruleHandler.PlayMixedRule();
+                BuildElementLog(winnerCard, player1Card, player2Card, player1Card.Damage, player2Card.Damage);
             } else
             {
                 winnerCard = PlayMixedRound(player1Card, player2Card);
@@ -118,17 +127,19 @@ namespace MTCG.Models
         {
             int card1Damage = player1Card.CalcDamageAgainst(player2Card.ElementType);
             int card2Damage = player2Card.CalcDamageAgainst(player1Card.ElementType);
+            Card? winnerCard = null;
 
             if (card1Damage > card2Damage)
             {
-                return player1Card;
+                winnerCard = player1Card;
             }
             else if (card2Damage > card1Damage)
             {
-                return player2Card;
+                winnerCard = player2Card;
             }
+            BuildElementLog(winnerCard, player1Card, player2Card, card1Damage, card2Damage);
             //same damage
-            return null;
+            return winnerCard;
         }
 
         public User? MonsterRound(MonsterCard player1Card, MonsterCard player2Card)
@@ -143,6 +154,7 @@ namespace MTCG.Models
             {
                 winnerCard = PlayMonsterRound(player1Card, player2Card);
             }
+            BuildMonsterLog(winnerCard, player1Card, player2Card);
 
             //Decide winning player
             return WinningPlayer(winnerCard, player1Card, player2Card);
@@ -182,6 +194,52 @@ namespace MTCG.Models
             }
 
             return null;
+        }
+
+        public void BuildElementLog(Card? winnerCard, Card player1Card, Card player2Card, int actualDamage1, int actualDamage2)
+        {
+            string damage1 = player1Card.Damage.ToString();
+            string damage2 = player2Card.Damage.ToString();
+
+            string playerA = "PlayerA: " + player1Card.Name + "(" + damage1 + " Damage)";
+            string playerB = "PlayerB: " + player2Card.Name + "("+ damage2 + " Damage)";
+            string winner = "";
+
+            if(winnerCard != null)
+            {
+                winner = winnerCard.Name+" wins";
+            } else
+            {
+                winner = "Draw (no action)";
+            }
+
+            string log = playerA + " vs " + playerB + " => "+ damage1 + " VS " + damage2 + " -> " + actualDamage1 + " VS " + actualDamage2 + " => " + winner;
+            RoundLog = log;
+        }
+
+        public void BuildMonsterLog(MonsterCard? winnerCard, MonsterCard player1Card, MonsterCard player2Card)
+        {
+            string damage1 = player1Card.Damage.ToString();
+            string damage2 = player2Card.Damage.ToString();
+
+            string playerA = "PlayerA: " + player1Card.Name + "(" + damage1 + " Damage)";
+            string playerB = "PlayerB: " + player2Card.Name + "(" + damage2 + " Damage)";
+            string winner = "";
+
+            if (winnerCard != null)
+            {
+                string winnerMonster = winnerCard.MonsterType.ToString();
+                string losingMonster = winnerCard == player1Card ? player2Card.MonsterType.ToString() : player1Card.MonsterType.ToString();
+                winner = winnerMonster+ " defeats "+losingMonster;
+                //TODO: use Method where needed
+            }
+            else
+            {
+                winner = "Draw (no action)";
+            }
+
+            string log = playerA + " vs " + playerB + " => " + winner;
+            RoundLog = log;
         }
 
 
