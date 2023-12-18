@@ -8,5 +8,14 @@ namespace MTCG.HttpServer.Response
 {
     internal class HttpResponse
     {
+        public StatusCode StatusCode { get; init; }
+        public string? Payload { get; init; }
+
+        public HttpResponse(StatusCode statusCode, string? payload = null)
+        {
+            StatusCode = statusCode;
+            Payload = payload;
+        }
+
     }
 }
