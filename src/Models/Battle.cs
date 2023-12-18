@@ -62,10 +62,14 @@ namespace MTCG.Models
         {
             if(Player1Wins > Player2Wins)
             {
+                _player1.WinElo();
+                _player2.LoseElo();
                 return _player1;
             }
             else if(Player2Wins > Player1Wins)
             {
+                _player2.WinElo();
+                _player1.LoseElo();
                 return _player2;
             }
             //no winner

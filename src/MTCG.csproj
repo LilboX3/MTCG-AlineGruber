@@ -10,7 +10,6 @@
   <ItemGroup>
     <Folder Include="Business Layer\" />
     <Folder Include="Data Layer\" />
-    <Folder Include="HttpServer\" />
   </ItemGroup>
 
   <ItemGroup>

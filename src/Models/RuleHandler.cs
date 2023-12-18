@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MTCG.Models
 {
-    internal class RuleHandler
+    public class RuleHandler
     {
         public Card Player1Card { get; set; }
         public Card Player2Card { get; set;}

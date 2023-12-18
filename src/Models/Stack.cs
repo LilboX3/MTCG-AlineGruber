@@ -23,6 +23,11 @@ namespace MTCG.Models
             return null;
         }
 
+        public Card? GetCardAt(int index)
+        {
+            return UserStack[index];
+        }
+
         public void RemoveCard(Card toRemove)
         {
             if(toRemove == null) return;

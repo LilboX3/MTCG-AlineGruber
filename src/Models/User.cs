@@ -205,5 +205,22 @@ namespace MTCG.Models
             }
             return false;
         }
+
+        public void FillDeckRandom()
+        {
+            for(int i = 0; i<4; i++)
+            {
+                Random rnd = new Random();
+                int rand = rnd.Next(0, _userStack.Size);
+                Card insert = _userStack.GetCardAt(rand);
+                if(insert == null)
+                {
+                    throw new ArgumentNullException("Null exception in FillDeckRandom()");
+                }
+                _userDeck.AddNewCard(insert);
+                _battleDeck.AddNewCard(insert);
+
+            }
+        }
     }
 }

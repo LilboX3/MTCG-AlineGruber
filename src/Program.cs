@@ -22,7 +22,7 @@ namespace MTCG
             
 
             Battle newBattle = new Battle(Player1, Player2);
-            User Winner = newBattle.PlayBattle();
+            User? Winner = newBattle.PlayBattle();
             Console.WriteLine(newBattle.BattleLog);
             if (Winner == null)
             {
