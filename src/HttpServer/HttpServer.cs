@@ -1,6 +1,4 @@
-﻿using MTCG.HttpServer.Response;
-using MTCG.HttpServer.Routing;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -12,11 +10,11 @@ namespace MTCG.HttpServer
 {
     internal class HttpServer
     {
-        private readonly IRouter _router;
+        private readonly Router _router;
         private readonly TcpListener _listener;
         private bool _listening;
 
-        public HttpServer(IRouter router, IPAddress address, int port)
+        public HttpServer(Router router, IPAddress address, int port)
         {
             _router = router;
             _listener = new TcpListener(address, port);
@@ -26,13 +24,14 @@ namespace MTCG.HttpServer
         public void Start()
         {
             _listener.Start();
+            Console.WriteLine($"Server started, looking for connections . . .");
             _listening = true;
 
             while (_listening)
             {
                 var client = _listener.AcceptTcpClient();
-                var clientHandler = new HttpClientHandler(client);
-                HandleClient(clientHandler);
+                Console.WriteLine($"New connection from {client.Client.RemoteEndPoint}");
+                HandleClient(client);
             }
         }
 
@@ -40,6 +39,21 @@ namespace MTCG.HttpServer
         {
             _listening = false;
             _listener.Stop();
+        }
+
+        /*
+        POST /sessions HTTP/1.1
+        Host: localhost:10001
+        Content-Type: application/json
+        Content-Length: ...
+        ----------------------TRENNZEILE----------------------
+        {"Username":"kienboec", "Password":"daniel"}*/
+
+        //Erste line holen, splittenab
+        //letzte line deserializen
+        public void HandleClient(TcpClient client)
+        {
+
         }
 
         private void HandleClient(HttpClientHandler handler)
