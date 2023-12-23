@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net;
 using System.Net.Sockets;
-using System.TextM
+using System.Text;
 using MTCG.Models;
 namespace MTCG
 {
@@ -11,8 +11,8 @@ namespace MTCG
         {
             IPAddress ipAdress = IPAddress.Any;
             int port = 10001;
-
-          
+            HttpServer.HttpServer newServer = new HttpServer.HttpServer(ipAdress, port);
+            newServer.Start();
             
             //Max 100 rounds
             //Randomly chooses cards of user

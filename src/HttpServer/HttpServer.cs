@@ -10,13 +10,13 @@ namespace MTCG.HttpServer
 {
     internal class HttpServer
     {
-        private readonly Router _router;
+        //private readonly Router _router;
         private readonly TcpListener _listener;
         private bool _listening;
 
-        public HttpServer(Router router, IPAddress address, int port)
+        public HttpServer(/*Router router, */IPAddress address, int port)
         {
-            _router = router;
+            //_router = router;
             _listener = new TcpListener(address, port);
             _listening = false;
         }
@@ -51,42 +51,42 @@ namespace MTCG.HttpServer
 
         //Erste line holen, splittenab
         //letzte line deserializen
+
+        //Get requests via stream from client
         public void HandleClient(TcpClient client)
         {
+            //Reader, cliebt variables
+            StreamReader streamReader = new StreamReader(client.GetStream());
+            StreamWriter streamWriter = new StreamWriter(client.GetStream());
+            string? line;
+            string[]? subs;
+            int lineIndex = 0;
+
+            //Request variables
+            string method = "";
+
+            while (true)
+            {
+                if(client.)
+                line = streamReader.ReadLine();
+                if(line == null)
+                {
+                    break;
+                }
+                subs = line.Split(' ');
+                if (lineIndex == 0)
+                {
+                   method = subs[0];
+                }
+                lineIndex++;
+                
+            }
+            Console.WriteLine($"Sent request with {method}!");
+            streamWriter.WriteLine($"Sent request with {method}!");
 
         }
 
-        private void HandleClient(HttpClientHandler handler)
-        {
-            var request = handler.ReceiveRequest();
-            HttpResponse response;
-
-            if (request is null)
-            {
-                response = new HttpResponse(StatusCode.BadRequest);
-            }
-            else
-            {
-                try
-                {
-                    var command = _router.Resolve(request);
-                    if (command is null)
-                    {
-                        response = new HttpResponse(StatusCode.BadRequest);
-                    }
-                    else
-                    {
-                        response = command.Execute();
-                    }
-                }
-                catch (RouteNotAuthenticatedException)
-                {
-                    response = new HttpResponse(StatusCode.Unauthorized);
-                }
-            }
-
-            handler.SendResponse(response);
-        }
+       
 
     }
 }
