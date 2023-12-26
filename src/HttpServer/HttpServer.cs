@@ -13,18 +13,20 @@ namespace MTCG.HttpServer
         //private readonly Router _router;
         private readonly TcpListener _listener;
         private bool _listening;
+        private int _serverPort;
 
         public HttpServer(/*Router router, */IPAddress address, int port)
         {
             //_router = router;
             _listener = new TcpListener(address, port);
             _listening = false;
+            _serverPort = port;
         }
 
         public void Start()
         {
             _listener.Start();
-            Console.WriteLine($"Server started, looking for connections . . .");
+            Console.WriteLine($"Server started on port {_serverPort}, looking for connections . . .");
             _listening = true;
 
             while (_listening)
@@ -67,22 +69,28 @@ namespace MTCG.HttpServer
 
             while (true)
             {
-                if(client.)
+                Console.WriteLine("Trying to read stream . . .");
+             
                 line = streamReader.ReadLine();
+                
                 if(line == null)
                 {
+                    Console.WriteLine("Leaving stream . . .");
                     break;
                 }
-                subs = line.Split(' ');
+                method += line;
+                Console.WriteLine(method);
+                /*subs = line.Split(' ');
                 if (lineIndex == 0)
                 {
                    method = subs[0];
                 }
                 lineIndex++;
-                
+                Console.WriteLine($"Sent request with {method}!");
+                streamWriter.WriteLine($"Sent request with {method}!");*/
             }
-            Console.WriteLine($"Sent request with {method}!");
-            streamWriter.WriteLine($"Sent request with {method}!");
+            Console.WriteLine(method);
+
 
         }
 
