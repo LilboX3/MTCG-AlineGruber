@@ -48,6 +48,14 @@ namespace MTCG.test
         }
 
         [Test]
+        public void TestBattleScoresAreZero()
+        {
+            Battle battle = new Battle(player1, player2);
+            Assert.That(battle.Player1Wins == 0);
+            Assert.That(battle.Player2Wins == 0);
+        }
+
+        [Test]
         public void TestBattleWinner()
         {
             Battle battle = new Battle(player1, player2);

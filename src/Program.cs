@@ -13,7 +13,7 @@ namespace MTCG
             int port = 10001;
             HttpServer.HttpServer newServer = new HttpServer.HttpServer(ipAdress, port);
             newServer.Start();
-            
+
             //Max 100 rounds
             //Randomly chooses cards of user
             //ADD A UNIQUE FEATURE (additional booster for 1 round to 1dotnet add package Npgsql --version 7.0.6 card, spells…)

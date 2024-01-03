@@ -54,7 +54,7 @@ namespace MTCG.HttpServer
             string[] getData = data.Split(' ');
             string method = getData[0];
             string path = getData[1];
-            Console.WriteLine("METHOD: "+getData[0]);
+            Console.WriteLine("METHOD: " + getData[0]);
             Console.WriteLine("PATH: " + getData[1]);
             Dictionary<string, string> headers = new Dictionary<string, string>();
 
@@ -64,16 +64,16 @@ namespace MTCG.HttpServer
             while (true)
             {
                 //Bei Leerzeile stoppen (string empty funktioniert nicht. . .)
-                if (lines[lineIndex+1]== lines.LastOrDefault())
+                if (lines[lineIndex + 1] == lines.LastOrDefault())
                 {
                     break;
                 }
                 string[] header = lines[lineIndex].Split(' ');
                 string key = header[0];
                 string value = "";
-                for(int i=1;i<header.Length;i++)
+                for (int i = 1; i < header.Length; i++)
                 {
-                    value += header[i]+" ";
+                    value += header[i] + " ";
                 }
                 headers.Add(key, value);
                 Console.WriteLine($"KEY: {key} CONTENT: {value}");
@@ -81,7 +81,7 @@ namespace MTCG.HttpServer
             }
             //letzte Zeile mit mitgeschickten Daten
             string payload = lines.LastOrDefault();
-            Console.WriteLine("THE DATA IS HERE: "+payload);
+            Console.WriteLine("THE DATA IS HERE: " + payload);
 
             HttpRequest request = new HttpRequest(method, path, payload, headers);
         }
@@ -90,21 +90,21 @@ namespace MTCG.HttpServer
         private string ReadToEnd(int len, StreamReader reader)
         {
             var data = new StringBuilder(200); //kann mehr char storen wenn benötigt, modifikation erstellt keine neue instanz !
-         
-                var chars = new char[1024];
-                var bytesReadTotal = 0;
 
-                var bytesRead = reader.Read(chars, 0, chars.Length);
-                bytesReadTotal += bytesRead;
-                data.Append(chars, 0, bytesRead);
+            var chars = new char[1024];
+            var bytesReadTotal = 0;
+
+            var bytesRead = reader.Read(chars, 0, chars.Length);
+            bytesReadTotal += bytesRead;
+            data.Append(chars, 0, bytesRead);
 
 
-                Console.WriteLine(data.ToString());
+            Console.WriteLine(data.ToString());
 
             return data.ToString();
         }
 
-       
+
 
     }
 }

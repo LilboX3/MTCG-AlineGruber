@@ -14,7 +14,6 @@ namespace MTCG.test
         [SetUp]
         public void Setup()
         {
-            //Wird vor jedem test ausgeführt
 
         }
 
@@ -40,11 +39,26 @@ namespace MTCG.test
         }
 
         [Test]
-        public void TestCard()
+        public void TestMonsterCard()
         {
             MonsterCard card = new MonsterCard(Monster.Knight, 100, "123", Element.Fire);
             Assert.That(card.Name.Equals("FireKnight"));
             Assert.That(card.Damage, Is.EqualTo(100));
+        }
+
+        [Test]
+        public void TestSpellCard()
+        {
+            SpellCard card = new SpellCard(100, "123", Element.Water);
+            Assert.That(card.Name.Equals("WaterSpell"));
+            Assert.That(card.Damage, Is.EqualTo(100));
+        }
+
+        [Test]
+        public void TestCardId()
+        {
+            Card card = new MonsterCard(Monster.Elf, 100, "thisisanid", Element.Regular);
+            Assert.That(card.Id , Is.EqualTo("thisisanid"));
         }
 
         [Test]
