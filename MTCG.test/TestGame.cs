@@ -59,8 +59,8 @@ namespace MTCG.test
         [Test]
         public void TestGoblinDragonRule()
         {
-            MonsterCard goblin = new MonsterCard(Monster.Goblin, 90, Element.Regular);
-            MonsterCard dragon = new MonsterCard(Monster.Dragon, 40, Element.Regular);
+            MonsterCard goblin = new MonsterCard(Monster.Goblin, 90, "1a", Element.Regular);
+            MonsterCard dragon = new MonsterCard(Monster.Dragon, 40, "1b", Element.Regular);
             RuleHandler rule = new RuleHandler(goblin, dragon);
             Assert.Multiple(() =>
             {
@@ -72,8 +72,8 @@ namespace MTCG.test
         [Test]
         public void TestOrkWizzardRule()
         {
-            MonsterCard wizzard = new MonsterCard(Monster.Wizzard, 10, Element.Regular);
-            MonsterCard ork = new MonsterCard(Monster.Ork, 100, Element.Regular);
+            MonsterCard wizzard = new MonsterCard(Monster.Wizzard, 10, "2a", Element.Regular);
+            MonsterCard ork = new MonsterCard(Monster.Ork, 100, "2b", Element.Regular);
             RuleHandler rule = new RuleHandler(wizzard, ork);
             Assert.Multiple(() =>
             {
@@ -85,8 +85,8 @@ namespace MTCG.test
         [Test]
         public void TestKnightWaterSpellRule()
         {
-            MonsterCard knight = new MonsterCard(Monster.Knight, 100, Element.Regular);
-            SpellCard waterSpell = new SpellCard(10, Element.Water);
+            MonsterCard knight = new MonsterCard(Monster.Knight, 100, "3a", Element.Regular);
+            SpellCard waterSpell = new SpellCard(10, "3c", Element.Water);
             RuleHandler rule = new RuleHandler(knight, waterSpell);
             Assert.Multiple(() =>
             {
@@ -98,8 +98,8 @@ namespace MTCG.test
         [Test]
         public void TestKrakenImmunity()
         {
-            MonsterCard kraken = new MonsterCard(Monster.Kraken, 10, Element.Regular);
-            SpellCard spell = new SpellCard(500, Element.Fire);
+            MonsterCard kraken = new MonsterCard(Monster.Kraken, 10, "4a", Element.Regular);
+            SpellCard spell = new SpellCard(500, "4b", Element.Fire);
             RuleHandler rule = new RuleHandler(kraken, spell);
             Assert.Multiple(() => 
             {
@@ -111,8 +111,8 @@ namespace MTCG.test
         [Test]
         public void TestDragonFireElfRule()
         {
-            MonsterCard fireElf = new MonsterCard(Monster.Elf, 10, Element.Fire);
-            MonsterCard dragon = new MonsterCard(Monster.Dragon, 500, Element.Water);
+            MonsterCard fireElf = new MonsterCard(Monster.Elf, 10, "5a", Element.Fire);
+            MonsterCard dragon = new MonsterCard(Monster.Dragon, 500, "5b", Element.Water);
             RuleHandler rule = new RuleHandler(fireElf, dragon);
             Assert.Multiple(() =>
             {

@@ -1,13 +1,20 @@
 {
   "version": 2,
-  "dgSpecHash": "CsMm53HWjvM/qaQt4+UE/o3RtQIlWVpGUEWpCYNdEiO76ASTRGlb4w/z6hZ6DcKYosAWVDVvbD8m6T96HLsXQQ==",
+  "dgSpecHash": "BFBDAj/JxJ763BGt3iJeOc7UsW2z9YysgQLgfUP25u333YmJFhgIHvSSvItuYnBRtlZAD2PisT7uMCDgMOKghg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\MonaL\\OneDrive\\Documents\\FHTW\\3. Semester\\SWEN\\MTCG-AlineGruber\\src\\MTCG.csproj",
+  "projectFilePath": "C:\\Users\\MonaL\\Documents\\StudiumFH\\3.Semester\\SWEN\\MTCG\\src\\MTCG.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\MonaL\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\8.0.0\\microsoft.extensions.dependencyinjection.abstractions.8.0.0.nupkg.sha512",
+    "C:\\Users\\MonaL\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\8.0.0\\microsoft.extensions.logging.abstractions.8.0.0.nupkg.sha512",
     "C:\\Users\\MonaL\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
     "C:\\Users\\MonaL\\.nuget\\packages\\netstandard.library\\2.0.0\\netstandard.library.2.0.0.nupkg.sha512",
+    "C:\\Users\\MonaL\\.nuget\\packages\\npgsql\\8.0.1\\npgsql.8.0.1.nupkg.sha512",
     "C:\\Users\\MonaL\\.nuget\\packages\\nuget.frameworks\\4.6.4\\nuget.frameworks.4.6.4.nupkg.sha512",
-    "C:\\Users\\MonaL\\.nuget\\packages\\nunit\\3.14.0\\nunit.3.14.0.nupkg.sha512"
+    "C:\\Users\\MonaL\\.nuget\\packages\\nunit\\3.14.0\\nunit.3.14.0.nupkg.sha512",
+    "C:\\Users\\MonaL\\.nuget\\packages\\system.diagnostics.diagnosticsource\\8.0.0\\system.diagnostics.diagnosticsource.8.0.0.nupkg.sha512",
+    "C:\\Users\\MonaL\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512",
+    "C:\\Users\\MonaL\\.nuget\\packages\\system.text.encodings.web\\8.0.0\\system.text.encodings.web.8.0.0.nupkg.sha512",
+    "C:\\Users\\MonaL\\.nuget\\packages\\system.text.json\\8.0.0\\system.text.json.8.0.0.nupkg.sha512"
   ],
   "logs": []
 }

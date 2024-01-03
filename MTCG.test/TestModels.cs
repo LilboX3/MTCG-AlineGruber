@@ -25,31 +25,26 @@ namespace MTCG.test
             User testUser = new User(credentials.Username, credentials.Password);
 
             Assert.That(testUser, Is.Not.Null);
+
+            Console.WriteLine("User: "+testUser.UserCredentials.Username+" password: "+testUser.UserCredentials.Password);
+            Console.WriteLine("Credentials: " + credentials.Username + " Password: " + credentials.Password);
+
             Assert.That(testUser.UserCredentials, Is.EqualTo(credentials));
-        }
-
-        [Test]
-        public void TestRandomCards()
-        {
-            Package testPackage = new Package();
-
-            Card randCard = testPackage.GenerateCard();
-
-            Console.WriteLine(randCard.ToString());
-
-            Assert.That(randCard, Is.Not.Null);
-
         }
 
         [Test]
         public void TestPackage()
         {
             Package package = new Package();
-            for(int i = 0; i<package.Cards.Length; i++)
-            {
-                Console.WriteLine(package.Cards[i].ToString());
-                Assert.That(package.Cards[i], Is.Not.Null);
-            }
+            Assert.That(package.Cards, Is.Not.Null);
+        }
+
+        [Test]
+        public void TestCard()
+        {
+            MonsterCard card = new MonsterCard(Monster.Knight, 100, "123", Element.Fire);
+            Assert.That(card.Name.Equals("FireKnight"));
+            Assert.That(card.Damage, Is.EqualTo(100));
         }
 
         [Test]
@@ -57,6 +52,7 @@ namespace MTCG.test
         {
             Stack stack = new Stack();
             Package package = new Package();
+            package.GeneratePackage();
 
             for (int i = 0; i < package.Cards.Length; i++)
             {

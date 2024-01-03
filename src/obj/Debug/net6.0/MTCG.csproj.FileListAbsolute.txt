@@ -81,3 +81,10 @@ C:\Users\MonaL\OneDrive\Documents\FHTW\3. Semester\SWEN\MTCG-AlineGruber\src\bin
 C:\Users\MonaL\OneDrive\Documents\FHTW\3. Semester\SWEN\MTCG-AlineGruber\src\obj\Debug\net6.0\MTCG.csproj.CopyComplete
 C:\Users\MonaL\OneDrive\Documents\FHTW\3. Semester\SWEN\MTCG-AlineGruber\src\obj\Debug\net6.0\MTCG.genruntimeconfig.cache
 C:\Users\MonaL\OneDrive\Documents\FHTW\3. Semester\SWEN\MTCG-AlineGruber\src\obj\Debug\net6.0\ref\MTCG.dll
+C:\Users\MonaL\Documents\StudiumFH\3.Semester\SWEN\MTCG\src\bin\Debug\net6.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\MonaL\Documents\StudiumFH\3.Semester\SWEN\MTCG\src\bin\Debug\net6.0\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\MonaL\Documents\StudiumFH\3.Semester\SWEN\MTCG\src\bin\Debug\net6.0\Npgsql.dll
+C:\Users\MonaL\Documents\StudiumFH\3.Semester\SWEN\MTCG\src\bin\Debug\net6.0\System.Diagnostics.DiagnosticSource.dll
+C:\Users\MonaL\Documents\StudiumFH\3.Semester\SWEN\MTCG\src\bin\Debug\net6.0\System.Text.Encodings.Web.dll
+C:\Users\MonaL\Documents\StudiumFH\3.Semester\SWEN\MTCG\src\bin\Debug\net6.0\System.Text.Json.dll
+C:\Users\MonaL\Documents\StudiumFH\3.Semester\SWEN\MTCG\src\bin\Debug\net6.0\runtimes\browser\lib\net6.0\System.Text.Encodings.Web.dll

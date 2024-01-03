@@ -10,14 +10,12 @@ namespace MTCG.HttpServer
 {
     internal class HttpServer
     {
-        //private readonly Router _router;
         private readonly TcpListener _listener;
         private bool _listening;
         private int _serverPort;
 
-        public HttpServer(/*Router router, */IPAddress address, int port)
+        public HttpServer(IPAddress address, int port)
         {
-            //_router = router;
             _listener = new TcpListener(address, port);
             _listening = false;
             _serverPort = port;
@@ -43,55 +41,67 @@ namespace MTCG.HttpServer
             _listener.Stop();
         }
 
-        /*
-        POST /sessions HTTP/1.1
-        Host: localhost:10001
-        Content-Type: application/json
-        Content-Length: ...
-        ----------------------TRENNZEILE----------------------
-        {"Username":"kienboec", "Password":"daniel"}*/
-
         //Erste line holen, splittenab
         //letzte line deserializen
 
         //Get requests via stream from client
         public void HandleClient(TcpClient client)
         {
-            //Reader, cliebt variables
             StreamReader streamReader = new StreamReader(client.GetStream());
-            StreamWriter streamWriter = new StreamWriter(client.GetStream());
-            string? line;
-            string[]? subs;
-            int lineIndex = 0;
+            string data = ReadToEnd(256, streamReader);
 
-            //Request variables
-            string method = "";
+            //TODO: route rauslesen, switch statement für route, nach verarbeitung response schicken UND DANN IWANN DATABASE
+            string[] getData = data.Split(' ');
+            string method = getData[0];
+            string path = getData[1];
+            Console.WriteLine("METHOD: "+getData[0]);
+            Console.WriteLine("PATH: " + getData[1]);
+            Dictionary<string, string> headers = new Dictionary<string, string>();
 
+            string[] lines = data.Split('\n');
+            int lineIndex = 1;
+            //key, value von header einlesen
             while (true)
             {
-                Console.WriteLine("Trying to read stream . . .");
-             
-                line = streamReader.ReadLine();
-                
-                if(line == null)
+                //Bei Leerzeile stoppen (string empty funktioniert nicht. . .)
+                if (lines[lineIndex+1]== lines.LastOrDefault())
                 {
-                    Console.WriteLine("Leaving stream . . .");
                     break;
                 }
-                method += line;
-                Console.WriteLine(method);
-                /*subs = line.Split(' ');
-                if (lineIndex == 0)
+                string[] header = lines[lineIndex].Split(' ');
+                string key = header[0];
+                string value = "";
+                for(int i=1;i<header.Length;i++)
                 {
-                   method = subs[0];
+                    value += header[i]+" ";
                 }
+                headers.Add(key, value);
+                Console.WriteLine($"KEY: {key} CONTENT: {value}");
                 lineIndex++;
-                Console.WriteLine($"Sent request with {method}!");
-                streamWriter.WriteLine($"Sent request with {method}!");*/
             }
-            Console.WriteLine(method);
+            //letzte Zeile mit mitgeschickten Daten
+            string payload = lines.LastOrDefault();
+            Console.WriteLine("THE DATA IS HERE: "+payload);
+
+            HttpRequest request = new HttpRequest(method, path, payload, headers);
+        }
+
+        //ganzen HTTP Request einlesen, später parsen
+        private string ReadToEnd(int len, StreamReader reader)
+        {
+            var data = new StringBuilder(200); //kann mehr char storen wenn benötigt, modifikation erstellt keine neue instanz !
+         
+                var chars = new char[1024];
+                var bytesReadTotal = 0;
+
+                var bytesRead = reader.Read(chars, 0, chars.Length);
+                bytesReadTotal += bytesRead;
+                data.Append(chars, 0, bytesRead);
 
 
+                Console.WriteLine(data.ToString());
+
+            return data.ToString();
         }
 
        

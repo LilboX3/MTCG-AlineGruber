@@ -11,7 +11,6 @@ namespace MTCG.Models
         public Card[] Cards { get; set; }
         public Package() {
             Cards = new Card[5];
-            GeneratePackage();
         }
 
         public MonsterCard GenerateRandomMonster()
@@ -30,8 +29,9 @@ namespace MTCG.Models
 
             //multiplied by 5, max of 100 damage?
             int damage = rand.Next(1, 21)*5;
+            int id = rand.Next(10, 10000);
             
-            MonsterCard RandMonster = new MonsterCard(monster, damage, element);
+            MonsterCard RandMonster = new MonsterCard(monster, damage, id.ToString(), element);
             return RandMonster;
         }
 
@@ -46,8 +46,9 @@ namespace MTCG.Models
 
             //multiplied by 5, max of 100 damage?
             int damage = rand.Next(1, 21) * 5;
-            
-            SpellCard RandSpell = new SpellCard(damage, element);
+            int id = rand.Next(10, 10000);
+
+            SpellCard RandSpell = new SpellCard(damage, id.ToString(), element);
             return RandSpell;
         }
 

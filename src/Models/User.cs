@@ -13,6 +13,8 @@ namespace MTCG.Models
         public Credentials UserCredentials { get; set; }
         public int EloValue { get; set; }
         public Card? CurrentCard { get; set; }
+        public int Wins { get; set; }
+        public int Losses { get; set; }
 
         private Deck _userDeck;
         //temp Deck for battles, to lose and win cards
@@ -28,6 +30,8 @@ namespace MTCG.Models
             _userStack = new Stack();
             _battleDeck = new Deck();
             CurrentCard = null;
+            Wins = 0;
+            Losses = 0;
         }
 
         public void BuyPackage()

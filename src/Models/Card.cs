@@ -10,12 +10,14 @@ namespace MTCG.Models
     {
         public int Damage { get; set; }
         public string Name { get; set; }
+        public string Id { get; set; }
         public Element ElementType { get; set; }
-        public Card(int damage, Element element)
+        public Card(int damage, Element element, string id)
         {
             Damage = damage;
             ElementType = element;
             Name = "";
+            Id = id;
         }
 
         public override string ToString()

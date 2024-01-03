@@ -10,9 +10,19 @@ namespace MTCG.HttpServer
     {
         public string Method { get; set; }
         public string Path { get; set; }
-        public string Host { get; set; }
-        public int ContentLength { get; set; }
-        public string Payload { get; set; }
-       
+        public string? Payload { get; set; }
+        public Dictionary<string, string> Headers { get; set; }
+
+        public HttpRequest(string method, string path, string? payload, Dictionary<string, string> headers)
+        {
+            if(method == null) throw new ArgumentNullException("method");
+            if(path == null) throw new ArgumentNullException("path");
+
+            Method = method;
+            Path = path;
+            Payload = payload;
+            Headers = headers;
+        }
+
     }
 }
