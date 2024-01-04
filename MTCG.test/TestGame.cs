@@ -12,14 +12,23 @@ namespace MTCG.test
     {
         User player1;
         User player2;
+        Package package1;
+        Package package2;
 
         [SetUp]
         public void Setup()
         {
             player1 = new User("name1", "password1");
             player2 = new User("name2", "password2");
+            package1 = new Package();
+            package2 = new Package();
+            package1.GeneratePackage();
+            package2.GeneratePackage();
+
             player1.BuyPackage();
             player2.BuyPackage();
+            player1.AddToStack(package1);
+            player2.AddToStack(package2);
             player1.FillDeckRandom();
             player2.FillDeckRandom();
         }

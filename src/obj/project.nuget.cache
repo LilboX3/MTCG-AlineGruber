@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "BFBDAj/JxJ763BGt3iJeOc7UsW2z9YysgQLgfUP25u333YmJFhgIHvSSvItuYnBRtlZAD2PisT7uMCDgMOKghg==",
+  "dgSpecHash": "Tbb8I6dRINfJ/mEigi9RVzTbKP2BZ44CnrecBCOB0c1nwEoBSS2odzs0QWJ1ABaGIObH1vXPfOhqHKu6NBdBPQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\MonaL\\Documents\\StudiumFH\\3.Semester\\SWEN\\MTCG\\src\\MTCG.csproj",
   "expectedPackageFiles": [
@@ -8,6 +8,7 @@
     "C:\\Users\\MonaL\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\8.0.0\\microsoft.extensions.logging.abstractions.8.0.0.nupkg.sha512",
     "C:\\Users\\MonaL\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
     "C:\\Users\\MonaL\\.nuget\\packages\\netstandard.library\\2.0.0\\netstandard.library.2.0.0.nupkg.sha512",
+    "C:\\Users\\MonaL\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512",
     "C:\\Users\\MonaL\\.nuget\\packages\\npgsql\\8.0.1\\npgsql.8.0.1.nupkg.sha512",
     "C:\\Users\\MonaL\\.nuget\\packages\\nuget.frameworks\\4.6.4\\nuget.frameworks.4.6.4.nupkg.sha512",
     "C:\\Users\\MonaL\\.nuget\\packages\\nunit\\3.14.0\\nunit.3.14.0.nupkg.sha512",

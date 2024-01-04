@@ -1,9 +1,14 @@
-﻿using MTCG.HttpServer;
+﻿using MTCG.Business_Layer;
+using MTCG.HttpServer;
+using MTCG.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using MTCG.Business_Layer;
+using MTCG.Routing;
 
 namespace MTCG
 {
@@ -41,23 +46,67 @@ namespace MTCG
 
         ----> Missing or invalid token: 401 Unauthorized Error
          */
-        public Router()
-        {
+        private BattleManager _battleManager;
+        private CardManager _cardManager;
+        private TradeManager _tradeManager;
+        private UserManager _userManager;
+        private PackageManager _packageManager;
+        private ScoreboardManager _scoreboardManager;
+        private DeckManager _deckManager;
+        private IdRouteParser _routeParser;
 
-        }
-        public void Resolve(HttpRequest request)
+        public Router(BattleManager battleManager, CardManager cardManager, TradeManager tradeManager, UserManager userManager, PackageManager packageManager, ScoreboardManager scoreboardManager, DeckManager deckManager, IdRouteParser idRouteParser)
         {
-            string path = request.Path;
-            switch (path)
+            _battleManager = battleManager;
+            _cardManager = cardManager;
+            _tradeManager = tradeManager;
+            _userManager = userManager;
+            _packageManager = packageManager;
+            _scoreboardManager = scoreboardManager;
+            _deckManager = deckManager;
+            _routeParser = idRouteParser;
+        }
+        public HttpResponse? Resolve(HttpRequest request)
+        {
+            HttpResponse? response = null;
+            var isUsernameMatch = (string path) => _routeParser.IsMatch(path, "/users/{username}");
+            var isTradeIdMatch = (string path) => _routeParser.IsMatch(path, "/tradings/{tradingdealid}");
+            var parseUser = (string path) => string.Parse(_routeParser.ParseParameters(path, "/users/{username}")["username"]);
+            var parseTradeId = (string path) => string.Parse(_routeParser.ParseParameters(path, "/tradings/{tradingdealid}")["tradingdealid"]);
+
+            response = request switch
             {
-                case "/users":
-                    break;
-            }
+                { Method: "POST", Path: "/users" } => _userManager.RegisterUser(JsonConvert.DeserializeObject<Credentials>(request.Payload)),
+                { Method: "GET", Path: } => _userManager.GetUserData(), //Show UserData Name, Bio, Image
+                { Method: "PUT", Path: } => _userManager.UpdateUserData(), //Update Name, Bio, Image
+
+                { Method: "POST", Path: "/sessions"} => _userManager.LoginUser(), //sends token back
+
+                { Method: "POST", Path: "/packages"} => _packageManager.CreatePackage(), //requires admin, 5 cards, card must be unique!!!!!
+
+                { Method: "POST", Path: "/transactions/packages"} => _packageManager.BuyPackage(), //user buys package (token), then remove from db? array response
+
+                { Method: "GET", Path: "/cards"} => _cardManager.GetUserCards(), //show token users acquired cards, as array
+
+                { Method: "GET", Path: "/deck"} => _deckManager.GetUserDeck(), //response array of card deck, textual deck description
+                { Method: "PUT", Path: "/deck"} => _deckManager.CreateDeck(), //Four card ids to create new deck as array, response just status
+
+                { Method: "GET", Path: "/stats"} => _userManager.GetUserStats(), //Get UserStats: Name, Elo, Wins, Losses
+
+                { Method: "GET", Path: "/scoreboard"} => _scoreboardManager.GetScoreboard(), //als array, geordnet nach elo
+
+                { Method: "POST", Path: "/battles"} => _battleManager.FindGame(), //enter lobby to start battle, wait for other user, return battle log
+
+                { Method: "GET", Path: "/tradings"} => _tradeManager.GetAvailableTrades(), // retrieve all available deals, as array
+                { Method: "POST", Path: "/tradings"} => _tradeManager.CreateTrade(),//create new deal, only for card you own, no response payload
+                { Method: "DELTE", Path: } => _tradeManager.DeleteDeal(), //Delete an existing deal, only by owner (id in path)
+                { Method: "POST", Path: } => _tradeManager.MakeDeal(), //carry out deal, request has tradeid and card id, no payload response, must be card owner, meet requirements
+                _ => new HttpResponse(StatusCode.NotImplemented)
+
+            };
+
+            return response;
         }
 
-        public void HandleUserRequests(HttpRequest request)
-        {
-
-        }
     }
 }

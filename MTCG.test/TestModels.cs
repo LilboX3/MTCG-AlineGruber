@@ -28,7 +28,8 @@ namespace MTCG.test
             Console.WriteLine("User: "+testUser.UserCredentials.Username+" password: "+testUser.UserCredentials.Password);
             Console.WriteLine("Credentials: " + credentials.Username + " Password: " + credentials.Password);
 
-            Assert.That(testUser.UserCredentials, Is.EqualTo(credentials));
+            Assert.That(testUser.UserCredentials.Username, Is.EqualTo(credentials.Username));
+            Assert.That(testUser.UserCredentials.Password, Is.EqualTo(credentials.Password));
         }
 
         [Test]

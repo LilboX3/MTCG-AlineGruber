@@ -3,16 +3,21 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using MTCG.Models;
+using MTCG.Business_Layer;
+using MTCG.Data_Layer;
+using MTCG.Routing;
+
 namespace MTCG
 {
     internal class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
             IPAddress ipAdress = IPAddress.Any;
             int port = 10001;
-            HttpServer.HttpServer newServer = new HttpServer.HttpServer(ipAdress, port);
-            newServer.Start();
+            Router router = new Router(new BattleManager(), new CardManager(), new TradeManager(), new UserManager(new UserDao()), new PackageManager(), new ScoreboardManager(), new DeckManager(), new IdRouteParser());
+            HttpServer.HttpServer newServer = new HttpServer.HttpServer(ipAdress, port, router);
+            await newServer.StartAsync();
 
             //Max 100 rounds
             //Randomly chooses cards of user

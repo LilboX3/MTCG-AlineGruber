@@ -40,12 +40,10 @@ namespace MTCG.Models
             {
                 Console.WriteLine("You only have " + Coins + " coins! You need 5 to buy a package.");
             }
-            Package Bought = new Package();
             Coins -= 5;
-            AddToStack(Bought);
         }
 
-        private void AddToStack(Package package)
+        public void AddToStack(Package package)
         {
             Card[] cards = package.Cards;
             for(int i=0; i<cards.Length; i++)
@@ -226,5 +224,6 @@ namespace MTCG.Models
 
             }
         }
+
     }
 }

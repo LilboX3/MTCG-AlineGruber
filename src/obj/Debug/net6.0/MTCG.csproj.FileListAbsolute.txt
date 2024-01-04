@@ -88,3 +88,4 @@ C:\Users\MonaL\Documents\StudiumFH\3.Semester\SWEN\MTCG\src\bin\Debug\net6.0\Sys
 C:\Users\MonaL\Documents\StudiumFH\3.Semester\SWEN\MTCG\src\bin\Debug\net6.0\System.Text.Encodings.Web.dll
 C:\Users\MonaL\Documents\StudiumFH\3.Semester\SWEN\MTCG\src\bin\Debug\net6.0\System.Text.Json.dll
 C:\Users\MonaL\Documents\StudiumFH\3.Semester\SWEN\MTCG\src\bin\Debug\net6.0\runtimes\browser\lib\net6.0\System.Text.Encodings.Web.dll
+C:\Users\MonaL\Documents\StudiumFH\3.Semester\SWEN\MTCG\src\bin\Debug\net6.0\Newtonsoft.Json.dll
