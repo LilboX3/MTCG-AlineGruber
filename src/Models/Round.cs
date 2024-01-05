@@ -89,8 +89,8 @@ namespace MTCG.Models
 
         private SpellCard? PlaySpellRound(SpellCard player1Card, SpellCard player2Card)
         {
-            int card1Damage = player1Card.CalcDamageAgainst(player2Card.ElementType);
-            int card2Damage = player2Card.CalcDamageAgainst(player1Card.ElementType);
+            float card1Damage = player1Card.CalcDamageAgainst(player2Card.ElementType);
+            float card2Damage = player2Card.CalcDamageAgainst(player1Card.ElementType);
             SpellCard? winnerCard = null;
 
             if(card1Damage > card2Damage)
@@ -125,8 +125,8 @@ namespace MTCG.Models
 
         private Card? PlayMixedRound(Card player1Card, Card player2Card)
         {
-            int card1Damage = player1Card.CalcDamageAgainst(player2Card.ElementType);
-            int card2Damage = player2Card.CalcDamageAgainst(player1Card.ElementType);
+            float card1Damage = player1Card.CalcDamageAgainst(player2Card.ElementType);
+            float card2Damage = player2Card.CalcDamageAgainst(player1Card.ElementType);
             Card? winnerCard = null;
 
             if (card1Damage > card2Damage)
@@ -196,7 +196,7 @@ namespace MTCG.Models
             return null;
         }
 
-        public void BuildElementLog(Card? winnerCard, Card player1Card, Card player2Card, int actualDamage1, int actualDamage2)
+        public void BuildElementLog(Card? winnerCard, Card player1Card, Card player2Card, float actualDamage1, float actualDamage2)
         {
             string damage1 = player1Card.Damage.ToString();
             string damage2 = player2Card.Damage.ToString();

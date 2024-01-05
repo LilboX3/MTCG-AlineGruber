@@ -8,7 +8,7 @@ namespace MTCG.Models
 {
     public class Package
     {
-        public Card[] Cards { get; set; }
+        public Card?[] Cards { get; set; }
         public Package() {
             Cards = new Card[5];
         }
@@ -65,6 +65,19 @@ namespace MTCG.Models
                 return GenerateRandomMonster();
             }
 
+        }
+
+        public void AddCard(Card card)
+        {
+            if (Cards.Length > 5)
+            {
+                throw new Exception("Package too big?");
+            }
+
+            for (var i = 0; i < Cards.Length; i++)
+            {
+                Cards[i] ??= card;
+            }
         }
 
         public void GeneratePackage()

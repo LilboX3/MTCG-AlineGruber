@@ -82,13 +82,13 @@ namespace MTCG
                 { Method: "PUT", Path: var path } when isUsernameMatch(path) => _userManager.UpdateUserData(parseUser(path), request.Headers, Deserialize<UserData>(request.Payload)), //Update Name, Bio, Image
                 { Method: "DELETE", Path: var path} when isUsernameMatch(path) => _userManager.DeleteUser(parseUser(path), request.Headers),
 
-                /*{ Method: "POST", Path: "/sessions"} => _userManager.LoginUser(), //sends token back
+                { Method: "POST", Path: "/sessions"} => _userManager.LoginUser(Deserialize<Credentials>(request.Payload)), //sends token back
+                
+                { Method: "POST", Path: "/packages"} => _packageManager.CreatePackage(Deserialize<CardFactory[]>(request.Payload), request.Headers), //requires admin, 5 cards, card must be unique!!!!!
 
-                { Method: "POST", Path: "/packages"} => _packageManager.CreatePackage(), //requires admin, 5 cards, card must be unique!!!!!
+                { Method: "POST", Path: "/transactions/packages"} => _packageManager.BuyPackage(request.Headers), //user buys package (token), then remove from db? array response
 
-                { Method: "POST", Path: "/transactions/packages"} => _packageManager.BuyPackage(), //user buys package (token), then remove from db? array response
-
-                { Method: "GET", Path: "/cards"} => _cardManager.GetUserCards(), //show token users acquired cards, as array
+                /*{ Method: "GET", Path: "/cards"} => _cardManager.GetUserCards(), //show token users acquired cards, as array
 
                 { Method: "GET", Path: "/deck"} => _deckManager.GetUserDeck(), //response array of card deck, textual deck description
                 { Method: "PUT", Path: "/deck"} => _deckManager.CreateDeck(), //Four card ids to create new deck as array, response just status
@@ -101,7 +101,7 @@ namespace MTCG
 
                 { Method: "GET", Path: "/tradings"} => _tradeManager.GetAvailableTrades(), // retrieve all available deals, as array
                 { Method: "POST", Path: "/tradings"} => _tradeManager.CreateTrade(),//create new deal, only for card you own, no response payload
-                { Method: "DELTE", Path: } => _tradeManager.DeleteDeal(), //Delete an existing deal, only by owner (id in path)
+                { Method: "DELETE", Path: } => _tradeManager.DeleteDeal(), //Delete an existing deal, only by owner (id in path)
                 { Method: "POST", Path: } => _tradeManager.MakeDeal(), //carry out deal, request has tradeid and card id, no payload response, must be card owner, meet requirements
                 */
                 _ => new HttpResponse(StatusCode.NotImplemented, "Route Not Implemented")

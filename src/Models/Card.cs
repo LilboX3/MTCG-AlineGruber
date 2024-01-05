@@ -8,11 +8,12 @@ namespace MTCG.Models
 {
     public abstract class Card
     {
-        public int Damage { get; set; }
-        public string Name { get; set; }
+        public float Damage { get; set; }
+        public string Name { get; set; }  
         public string Id { get; set; }
         public Element ElementType { get; set; }
-        public Card(int damage, Element element, string id)
+
+        public Card(float damage, Element element, string id)
         {
             Damage = damage;
             ElementType = element;
@@ -27,9 +28,9 @@ namespace MTCG.Models
         }
 
         //Water > fire, fire > normal, normal > water
-        public int CalcDamageAgainst(Element opponentElement)
+        public float CalcDamageAgainst(Element opponentElement)
         {
-            int damage = this.Damage;
+            float damage = this.Damage;
             //Stronger element
             if(this.ElementType == Element.Water && opponentElement == Element.Fire)
             {

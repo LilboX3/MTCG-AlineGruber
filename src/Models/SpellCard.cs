@@ -9,7 +9,7 @@ namespace MTCG.Models
 {
     public class SpellCard: Card
     {
-        public SpellCard(int damage, string id, Element element): base(damage, element, id) 
+        public SpellCard(float damage, string id, Element element): base(damage, element, id) 
         {
             Name = element.ToString() + "Spell";
         }

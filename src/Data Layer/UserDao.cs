@@ -18,7 +18,8 @@ namespace MTCG.Data_Layer
         private const string SelectUserDataByUserIdCommand = @"SELECT * FROM ""UserData"" WHERE userid = @userid";
         private const string InsertUserDataCommand = @"INSERT INTO ""UserData"" (userid, name, bio, image) VALUES (@userid, @name, @bio, @image)";
         private const string InsertTokenByNameCommand = @"UPDATE ""User"" SET token = @token WHERE username = @username";
-
+        private const string UpdateUserDataCommand = @"UPDATE ""UserData"" SET name = @name, bio = @bio, image = @image WHERE userid = @userid";
+        private const string GetUserByTokenCommand = @"SELECT * FROM ""User"" WHERE token = @token";
         public bool InsertUser(User user)
         {
             using NpgsqlConnection connection = DatabaseConnection.GetConnection();
@@ -61,6 +62,33 @@ namespace MTCG.Data_Layer
             //if no rows: user doesnt exist yet!
         }
 
+        public User? GetUserObjectByToken(string token)
+        {
+            //TODO retrieve user by token
+            using NpgsqlConnection connection = DatabaseConnection.GetConnection();
+            connection.Open();
+
+            using var cmd = new NpgsqlCommand(GetUserByTokenCommand, connection);
+            cmd.Parameters.AddWithValue("token", token);
+            using var reader = cmd.ExecuteReader();
+            if (reader.Read())
+            {
+                User user = new User
+                (
+                    reader.GetString(reader.GetOrdinal("username")),
+                    reader.GetString(reader.GetOrdinal("password")))
+                {
+                    EloValue = reader.GetInt32(reader.GetOrdinal("elo")),
+                    Wins = reader.GetInt32(reader.GetOrdinal("wins")),
+                    Losses = reader.GetInt32(reader.GetOrdinal("losses")),
+                    Coins = reader.GetInt32(reader.GetOrdinal("coins"))
+                };
+                return user;
+            }
+
+            return null;
+        }
+
         public bool DeleteUser(string username)
         {
             using NpgsqlConnection connection = DatabaseConnection.GetConnection();
@@ -73,14 +101,12 @@ namespace MTCG.Data_Layer
             return affectedRows > 0;
         }
 
-        public string? LoginUser(Models.Credentials credentials)
+        public string? LoginUser(string username, string password)
         {
             using NpgsqlConnection connection = DatabaseConnection.GetConnection();
             connection.Open();
 
             using var cmd = new NpgsqlCommand(SelectUserByCredentialsCommand, connection);
-            string username = credentials.Username;
-            string password = credentials.Password;
 
             cmd.Parameters.AddWithValue("username", username);
             cmd.Parameters.AddWithValue("password", password);
@@ -153,9 +179,16 @@ namespace MTCG.Data_Layer
                 //User not found
                 return false;
             }
-            if () //already exists, only update values
+            if (UserDataExists(userId)) //already exists, only update values
             {
-               
+                using var cmd2 = new NpgsqlCommand(UpdateUserDataCommand, connection);
+                cmd2.Parameters.AddWithValue("userid", userId);
+                cmd2.Parameters.AddWithValue("name", userData.Name);
+                cmd2.Parameters.AddWithValue("bio", userData.Bio);
+                cmd2.Parameters.AddWithValue("image", userData.Image);
+                var affectedRows2 = cmd2.ExecuteNonQuery();
+
+                return affectedRows2 > 0;
             }
             using var cmd = new NpgsqlCommand(InsertUserDataCommand, connection);
             cmd.Parameters.AddWithValue("userid", userId);
@@ -166,6 +199,20 @@ namespace MTCG.Data_Layer
 
             return affectedRows > 0;
 
+        }
+
+        private bool UserDataExists(int userId)
+        {
+            using NpgsqlConnection connection = DatabaseConnection.GetConnection();
+            connection.Open();
+
+            using var cmd = new NpgsqlCommand(SelectUserDataByUserIdCommand, connection);
+            cmd.Parameters.AddWithValue("userid", userId);
+
+            using var reader = cmd.ExecuteReader();
+
+            //ob select eine zeile gefunden hat
+            return reader.HasRows;
         }
 
         private int GetUserId(string username)

@@ -37,14 +37,19 @@ namespace MTCG.test
         public void TestUserLogin()
         {
             string username = player1.UserCredentials.Username;
-            Assert.That(userDao.LoginUser(player1.UserCredentials), Is.Not.Null);
-            Assert.That(userDao.LoginUser(player1.UserCredentials).Equals(username+"-mtcgToken"));
+            string password = player1.UserCredentials.Password;
+            Assert.That(userDao.LoginUser(username, password), Is.Not.Null);
+            Assert.That(userDao.LoginUser(username, password).Equals(username+"-mtcgToken"));
         }
 
         [Test, Order(3)]
         public void TestTokenExists()
         {
-            //Assert.That(userDao.TokenExists());
+            string username = player1.UserCredentials.Username;
+            string password = player1.UserCredentials.Password;
+            string? token = userDao.LoginUser(username, password);
+            Assert.That(token, Is.Not.Null);
+            Assert.That(userDao.TokenExists(token));
         }
 
         [Test, Order(4)]

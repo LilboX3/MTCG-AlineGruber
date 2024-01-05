@@ -21,12 +21,13 @@ namespace MTCG.Business_Layer
 
         public HttpResponse RegisterUser(Credentials credentials)
         {
-            var user = new User(credentials.Username, credentials.Password);
+            string password = credentials.Password;
+            var user = new User(credentials.Username, password);
             if (_userDao.InsertUser(user) == false)
             {
-                return new HttpServer.HttpResponse(HttpServer.StatusCode.Conflict, "User with same username already registered");
+                return new HttpResponse(StatusCode.Conflict, "User with same username already registered");
             }
-            return new HttpServer.HttpResponse(HttpServer.StatusCode.Created, "User successfully created");
+            return new HttpResponse(StatusCode.Created, "User successfully created");
         }
 
         public HttpResponse GetUserData(string username, Dictionary<string, string> headers)
@@ -81,6 +82,18 @@ namespace MTCG.Business_Layer
                 return new HttpResponse(StatusCode.Unauthorized, "Unauthorized Error");
             }
 
+        }
+
+        public HttpResponse LoginUser(Credentials credentials)
+        {
+            string username = credentials.Username;
+            string password = credentials.Password;
+            string? token = _userDao.LoginUser(username, password);
+            if (token != null)
+            {
+                return new HttpResponse(StatusCode.Ok, "User login successful: "+token);
+            }
+            return new HttpResponse(StatusCode.Unauthorized, "Invalid username/password provided");
         }
 
         private bool IsAdminOrUserToken(string username, Dictionary<string, string> headers)
