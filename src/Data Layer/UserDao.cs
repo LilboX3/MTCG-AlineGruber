@@ -4,18 +4,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MTCG.Models;
 
 namespace MTCG.Data_Layer
 {
     public class UserDao
     {
         private const string InsertUserCommand = @"INSERT INTO ""User""(username, password, elo, wins, losses) VALUES (@username, @password, @elo, @wins, @losses)";
-        private const string SelectUserByNameCommand = @"SELECT userid FROM ""User"" WHERE username = @username";
+        private const string SelectUserIdByNameCommand = @"SELECT userid FROM ""User"" WHERE username = @username";
         private const string DeleteUserByNameCommand = @"DELETE FROM ""User"" WHERE username = @username";
         private const string SelectUserByCredentialsCommand = @"SELECT userid FROM ""User"" WHERE username = @username AND password = @password";
         private const string SelectUserByTokenCommand = @"SELECT userid FROM ""User"" WHERE token = @token";
+        private const string SelectUserDataByUserIdCommand = @"SELECT * FROM ""UserData"" WHERE userid = @userid";
+        private const string InsertUserDataCommand = @"INSERT INTO ""UserData"" (userid, name, bio, image) VALUES (@userid, @name, @bio, @image)";
+        private const string InsertTokenByNameCommand = @"UPDATE ""User"" SET token = @token WHERE username = @username";
 
-        public bool InsertUser(Models.User user)
+        public bool InsertUser(User user)
         {
             using NpgsqlConnection connection = DatabaseConnection.GetConnection();
             connection.Open();
@@ -49,7 +53,7 @@ namespace MTCG.Data_Layer
             using NpgsqlConnection connection = DatabaseConnection.GetConnection();
             connection.Open();
 
-            using var cmd = new NpgsqlCommand(SelectUserByNameCommand, connection);
+            using var cmd = new NpgsqlCommand(SelectUserIdByNameCommand, connection);
             cmd.Parameters.AddWithValue("username", username);
             using var reader = cmd.ExecuteReader();
 
@@ -69,7 +73,7 @@ namespace MTCG.Data_Layer
             return affectedRows > 0;
         }
 
-        public bool LoginUser(Models.Credentials credentials)
+        public string? LoginUser(Models.Credentials credentials)
         {
             using NpgsqlConnection connection = DatabaseConnection.GetConnection();
             connection.Open();
@@ -81,8 +85,17 @@ namespace MTCG.Data_Layer
             cmd.Parameters.AddWithValue("username", username);
             cmd.Parameters.AddWithValue("password", password);
             using var reader = cmd.ExecuteReader();
-            //TODO: Insert token to database, or return 
-            return reader.Read();
+            
+            if (reader.Read())
+            {
+                string token = GenerateToken(username);
+                if (!InsertToken(username, token))
+                {
+                    throw new ArgumentException("Cannot insert token to database"); 
+                }
+                return token;
+            }
+            return null;
         }
 
         public bool TokenExists(string token)
@@ -97,6 +110,84 @@ namespace MTCG.Data_Layer
             return reader.Read();
         }
 
+        public UserData? GetUserData(string username)
+        {
+            using NpgsqlConnection connection = DatabaseConnection.GetConnection();
+            connection.Open();
+
+            //get userid to get userdata
+            int userId = GetUserId(username);
+            if (userId == -1)
+            {
+                //User not found
+                return null;
+            }
+
+            //Now get userData
+            using var cmd2 = new NpgsqlCommand(SelectUserDataByUserIdCommand, connection);
+            cmd2.Parameters.AddWithValue("userid", userId);
+            using var reader2 = cmd2.ExecuteReader();
+
+            if (reader2.Read())
+            {
+                string? name = reader2["name"].ToString();
+                string? bio = reader2["bio"].ToString();
+                string? image = reader2["image"].ToString();
+                UserData userData = new UserData(name, bio, image);
+                return userData;
+            }
+            else
+            {
+                return null;
+            }
+        }
+        public bool UpdateUserData(string username, UserData userData)
+        {
+            using NpgsqlConnection connection = DatabaseConnection.GetConnection();
+            connection.Open();
+
+            //get userid to get userdata
+            int userId = GetUserId(username);
+            if (userId == -1)
+            {
+                //User not found
+                return false;
+            }
+            if () //already exists, only update values
+            {
+               
+            }
+            using var cmd = new NpgsqlCommand(InsertUserDataCommand, connection);
+            cmd.Parameters.AddWithValue("userid", userId);
+            cmd.Parameters.AddWithValue("name", userData.Name);
+            cmd.Parameters.AddWithValue("bio", userData.Bio);
+            cmd.Parameters.AddWithValue("image", userData.Image);
+            var affectedRows = cmd.ExecuteNonQuery();
+
+            return affectedRows > 0;
+
+        }
+
+        private int GetUserId(string username)
+        {
+            using NpgsqlConnection connection = DatabaseConnection.GetConnection();
+            connection.Open();
+
+            using var cmd = new NpgsqlCommand(SelectUserIdByNameCommand, connection);
+            cmd.Parameters.AddWithValue("username", username);
+            using var reader = cmd.ExecuteReader();
+            int userId;
+
+            if (reader.Read())
+            {
+                userId = reader.GetInt32(reader.GetOrdinal("userid"));
+                return userId;
+            }
+            //User not found
+            return -1;
+
+        }
+
         private string GenerateToken(string username)
         {
             return $"{username}-mtcgToken";
@@ -104,7 +195,17 @@ namespace MTCG.Data_Layer
         
         private bool InsertToken(string username, string token)
         {
-            return false;
+            using NpgsqlConnection connection = DatabaseConnection.GetConnection();
+            connection.Open();
+
+            using var cmd = new NpgsqlCommand(InsertTokenByNameCommand, connection);
+            cmd.Parameters.AddWithValue("username", username);
+            cmd.Parameters.AddWithValue ("token", token);
+            var affectedRows = cmd.ExecuteNonQuery();
+
+            return affectedRows > 0;
         }
+
+        
     }
 }

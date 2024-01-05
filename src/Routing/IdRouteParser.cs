@@ -11,8 +11,11 @@ namespace MTCG.Routing
     {
         public bool IsMatch(string resourcePath, string routePattern)
         {
-            var pattern = "^" + routePattern.Replace("{id}", ".*").Replace("/", "\\/") + "(\\?.*)?$";
+            //zB website.com/search?key=keyword&page=1 --> erkennt search als id, rest als query parameter
+            var pattern = "^" + routePattern.Replace("{id}", ".*").Replace("/", "\\/") + "(\\?.*)?$"; //sucht ? (nicht regex zeichen) kann auch keine query parameter haben (? am ende)
+            //{id} mit .* ersetzen (alle möglichen zeichen beliebig oft), / mit \/ ersetzen weil / spezielle bedeutung, mehr \ am ende mit weiteren zeicvhen möglich (query parameter)
             return Regex.IsMatch(resourcePath, pattern);
+            //-> schaun ob path diesem Muster entspricht
         }
 
         public Dictionary<string, string> ParseParameters(string resourcePath, string routePattern)
@@ -32,8 +35,11 @@ namespace MTCG.Routing
 
         private string? ParseIdParameter(string resourcePath, string routePattern)
         {
+            //{id} mit pattern ersetzen, das extrahiert werden soll
             var pattern = "^" + routePattern.Replace("{id}", "(?<id>[^\\?\\/]*)").Replace("/", "\\/") + "$";
+            //extrahiert id (alles außer schrägstrich und fragezeichen)
             var result = Regex.Match(resourcePath, pattern);
+            //extrahierten string aus "id" zurückgeben
             return result.Groups["id"].Success ? result.Groups["id"].Value : null;
         }
 

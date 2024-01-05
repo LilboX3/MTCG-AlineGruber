@@ -68,19 +68,21 @@ namespace MTCG
         }
         public HttpResponse? Resolve(HttpRequest request)
         {
+            Console.WriteLine("CURRENTLY IN ROUTER");
             HttpResponse? response = null;
-            var isUsernameMatch = (string path) => _routeParser.IsMatch(path, "/users/{username}");
-            var isTradeIdMatch = (string path) => _routeParser.IsMatch(path, "/tradings/{tradingdealid}");
-            var parseUser = (string path) => string.Parse(_routeParser.ParseParameters(path, "/users/{username}")["username"]);
-            var parseTradeId = (string path) => string.Parse(_routeParser.ParseParameters(path, "/tradings/{tradingdealid}")["tradingdealid"]);
+            var isUsernameMatch = (string path) => _routeParser.IsMatch(path, "/users/{id}");
+            var isTradeIdMatch = (string path) => _routeParser.IsMatch(path, "/tradings/{id}");
+            var parseUser = (string path) => _routeParser.ParseParameters(path, "/users/{id}")["id"];
+            var parseTradeId = (string path) => _routeParser.ParseParameters(path, "/tradings/{id}")["id"];
 
             response = request switch
             {
-                { Method: "POST", Path: "/users" } => _userManager.RegisterUser(JsonConvert.DeserializeObject<Credentials>(request.Payload)),
-                { Method: "GET", Path: } => _userManager.GetUserData(), //Show UserData Name, Bio, Image
-                { Method: "PUT", Path: } => _userManager.UpdateUserData(), //Update Name, Bio, Image
+                { Method: "POST", Path: "/users" } => _userManager.RegisterUser(Deserialize<Credentials>(request.Payload)),
+                { Method: "GET", Path: var path } when isUsernameMatch(path) => _userManager.GetUserData(parseUser(path), request.Headers), //Show UserData Name, Bio, Image
+                { Method: "PUT", Path: var path } when isUsernameMatch(path) => _userManager.UpdateUserData(parseUser(path), request.Headers, Deserialize<UserData>(request.Payload)), //Update Name, Bio, Image
+                { Method: "DELETE", Path: var path} when isUsernameMatch(path) => _userManager.DeleteUser(parseUser(path), request.Headers),
 
-                { Method: "POST", Path: "/sessions"} => _userManager.LoginUser(), //sends token back
+                /*{ Method: "POST", Path: "/sessions"} => _userManager.LoginUser(), //sends token back
 
                 { Method: "POST", Path: "/packages"} => _packageManager.CreatePackage(), //requires admin, 5 cards, card must be unique!!!!!
 
@@ -101,12 +103,20 @@ namespace MTCG
                 { Method: "POST", Path: "/tradings"} => _tradeManager.CreateTrade(),//create new deal, only for card you own, no response payload
                 { Method: "DELTE", Path: } => _tradeManager.DeleteDeal(), //Delete an existing deal, only by owner (id in path)
                 { Method: "POST", Path: } => _tradeManager.MakeDeal(), //carry out deal, request has tradeid and card id, no payload response, must be card owner, meet requirements
-                _ => new HttpResponse(StatusCode.NotImplemented)
+                */
+                _ => new HttpResponse(StatusCode.NotImplemented, "Route Not Implemented")
 
             };
 
             return response;
         }
+
+        private T Deserialize<T>(string? body) where T : class
+        {
+            var data = body is not null ? JsonConvert.DeserializeObject<T>(body) : null;
+            return data ?? throw new InvalidDataException();
+        }
+
 
     }
 }
