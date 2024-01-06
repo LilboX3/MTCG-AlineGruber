@@ -82,7 +82,6 @@ namespace MTCG.HttpServer
         {
             string data = ReadToEnd(clientStream);
 
-            //TODO: route rauslesen, switch statement für route, nach verarbeitung response schicken UND DANN IWANN DATABASE
             string[] getData = data.Split(' ');
             string method = getData[0];
             string path = getData[1];

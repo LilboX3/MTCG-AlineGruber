@@ -27,8 +27,6 @@ namespace MTCG.Models
             _player2 = player2;
             RoundLog = "";
         }
-        //TODO: Gewinner bekommt Karte
-        //TODO: Round log schreiben
         public void PlayRound()
         {
             //Set up random cards of players
@@ -231,7 +229,6 @@ namespace MTCG.Models
                 string winnerMonster = winnerCard.MonsterType.ToString();
                 string losingMonster = winnerCard == player1Card ? player2Card.MonsterType.ToString() : player1Card.MonsterType.ToString();
                 winner = winnerMonster+ " defeats "+losingMonster;
-                //TODO: use Method where needed
             }
             else
             {

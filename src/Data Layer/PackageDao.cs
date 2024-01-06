@@ -82,8 +82,6 @@ namespace MTCG.Data_Layer
 
                 return cards;
             }
-            //TODO Reduce coins of user by 5
-            //TODO Give all cards in package the id of user
             
             return null;
         }

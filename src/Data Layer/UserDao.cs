@@ -64,7 +64,6 @@ namespace MTCG.Data_Layer
 
         public User? GetUserObjectByToken(string token)
         {
-            //TODO retrieve user by token
             using NpgsqlConnection connection = DatabaseConnection.GetConnection();
             connection.Open();
 
