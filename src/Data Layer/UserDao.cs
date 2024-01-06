@@ -20,6 +20,10 @@ namespace MTCG.Data_Layer
         private const string InsertTokenByNameCommand = @"UPDATE ""User"" SET token = @token WHERE username = @username";
         private const string UpdateUserDataCommand = @"UPDATE ""UserData"" SET name = @name, bio = @bio, image = @image WHERE userid = @userid";
         private const string GetUserByTokenCommand = @"SELECT * FROM ""User"" WHERE token = @token";
+        private const string UpdateUserEloByNameCommand = @"UPDATE ""User"" SET elo = @elo WHERE username = @username";
+        private const string UpdateUserWinsByNameCommand = @"UPDATE ""User"" SET wins = wins + @wins WHERE username = @username";
+        private const string UpdateUserLossByNameCommand = @"UPDATE ""User"" SET losses = losses + @losses WHERE username = @username";
+        
         public bool InsertUser(User user)
         {
             using NpgsqlConnection connection = DatabaseConnection.GetConnection();
@@ -198,6 +202,73 @@ namespace MTCG.Data_Layer
 
             return affectedRows > 0;
 
+        }
+
+        public UserStats GetUserStats(string token)
+        {
+            using NpgsqlConnection connection = DatabaseConnection.GetConnection();
+            connection.Open();
+
+            using var cmd = new NpgsqlCommand(GetUserByTokenCommand, connection);
+            cmd.Parameters.AddWithValue("token", token);
+            using var reader = cmd.ExecuteReader();
+            
+            string name = "";
+            int elo = 0;
+            int wins = 0;
+            int losses = 0;
+            if (reader.Read())
+            {
+                name = reader.GetString(reader.GetOrdinal("username"));
+                elo = reader.GetInt32(reader.GetOrdinal("elo"));
+                wins = reader.GetInt32(reader.GetOrdinal("wins"));
+                losses = reader.GetInt32(reader.GetOrdinal("losses"));
+            }
+            return new UserStats(name, elo, wins, losses);
+            
+        }
+        
+        public bool UpdateElo(User user)
+        {
+            using NpgsqlConnection connection = DatabaseConnection.GetConnection();
+            connection.Open();
+            
+            using var cmd = new NpgsqlCommand(UpdateUserEloByNameCommand, connection);
+            cmd.Parameters.AddWithValue("username", user.UserCredentials.Username);
+            cmd.Parameters.AddWithValue("elo", user.EloValue);
+            var affectedRows = cmd.ExecuteNonQuery();
+
+            return affectedRows > 0;
+        }
+
+        public bool AddLoss(User? user)
+        {
+            if (user == null)
+            {
+                return false;
+            }
+            using NpgsqlConnection connection = DatabaseConnection.GetConnection();
+            connection.Open();
+
+            using var cmd = new NpgsqlCommand(UpdateUserLossByNameCommand, connection);
+            cmd.Parameters.AddWithValue("username", user.UserCredentials.Username);
+            cmd.Parameters.AddWithValue("losses",1);
+            var affectedRows = cmd.ExecuteNonQuery();
+
+            return affectedRows > 0;
+        }
+
+        public bool AddWin(User user)
+        {
+            using NpgsqlConnection connection = DatabaseConnection.GetConnection();
+            connection.Open();
+            
+            using var cmd = new NpgsqlCommand(UpdateUserWinsByNameCommand, connection);
+            cmd.Parameters.AddWithValue("username", user.UserCredentials.Username);
+            cmd.Parameters.AddWithValue("wins",1);
+            var affectedRows = cmd.ExecuteNonQuery();
+
+            return affectedRows > 0;
         }
 
         private bool UserDataExists(int userId)

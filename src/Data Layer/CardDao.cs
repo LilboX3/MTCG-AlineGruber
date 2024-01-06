@@ -13,6 +13,8 @@ namespace MTCG.Data_Layer
         private const string InsertMonsterCardCommand = @"INSERT INTO ""Card""(cardid, name, damage, element, monstertype) VALUES (@cardid, @name, @damage, @element, @monstertype)";
         private const string InsertCardCommand = @"INSERT INTO ""Card""(cardid, name, damage, element) VALUES (@cardid, @name, @damage, @element)";
         private const string SelectCardByIdCommand = @"SELECT * FROM ""Card"" WHERE cardid = @cardid";
+        private const string GetUserIdByTokenCommand = @"SELECT userid FROM ""User"" WHERE token = @token";
+        private const string GetCardsOfUserCommand = @"SELECT * FROM ""Card"" WHERE userid = @userid;";
         public bool InsertCard(Card card)
         {
             using NpgsqlConnection connection = DatabaseConnection.GetConnection();
@@ -54,7 +56,77 @@ namespace MTCG.Data_Layer
             
         }
 
-        public bool CardAlreadyExists(Card card)
+        public Card[]? GetUserCardsByToken(string token)
+        {
+            using NpgsqlConnection connection = DatabaseConnection.GetConnection();
+            connection.Open();
+            int userid = GetUserIdByToken(token);
+            if (userid == -1)
+            {
+                Console.WriteLine("Userid is null");
+                return null;
+            }
+            
+            List<Card> cards = new List<Card>();
+            using var cmd = new NpgsqlCommand(GetCardsOfUserCommand, connection);
+            cmd.Parameters.AddWithValue("userid", userid);
+
+            var reader = cmd.ExecuteReader();
+            if (!reader.Read())
+            {
+                //no cards belong to user
+                Console.WriteLine("user "+userid+" has no cards");
+                return null;
+            }
+
+            while (reader.Read())
+            {
+                Console.WriteLine("reading user cards");
+                string cardid = reader.GetString(reader.GetOrdinal("cardid"));
+                double damage = reader.GetDouble(reader.GetOrdinal("damage"));
+                Element element;
+                string elementString = reader.GetString(reader.GetOrdinal("element"));
+                Enum.TryParse<Element>(elementString, out element);
+                    
+                int monsterTypeOrdinal = reader.GetOrdinal("monstertype");
+                string? monsterType = reader.IsDBNull(monsterTypeOrdinal) ? null : reader.GetString(monsterTypeOrdinal);
+                if (monsterType != null)
+                {
+                    Monster monster;
+                    Enum.TryParse<Monster>(monsterType, out monster);
+                    MonsterCard monsterCard = new MonsterCard(monster, (float)damage, cardid, element);
+                    cards.Add(monsterCard);
+                }
+                else
+                {
+                    SpellCard spellCard = new SpellCard((float)damage, cardid, element);
+                    cards.Add(spellCard);
+                }
+                
+               
+            }
+            
+            return cards.ToArray();
+        }
+
+        private int GetUserIdByToken(string token)
+        {
+            using NpgsqlConnection connection = DatabaseConnection.GetConnection();
+            connection.Open();
+            using var cmd = new NpgsqlCommand(GetUserIdByTokenCommand, connection);
+            cmd.Parameters.AddWithValue("token", token);
+            using var reader = cmd.ExecuteReader();
+            
+            if (reader.Read())
+            {
+                int userid = reader.GetInt32(reader.GetOrdinal("userid"));
+                return userid;
+            }
+
+            return -1;
+        }
+
+        private bool CardAlreadyExists(Card card)
         {
             using NpgsqlConnection connection = DatabaseConnection.GetConnection();
             connection.Open();

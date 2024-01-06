@@ -63,9 +63,9 @@ namespace MTCG.HttpServer
                 {
                     response = _router.Resolve(request);
                 }
-                catch (RouteNotAuthenticatedException)
+                catch (InvalidDataException)
                 {
-                    response = new HttpResponse(StatusCode.Unauthorized);
+                    response = new HttpResponse(StatusCode.InternalServerError, "Could not deserialize");
                 }
             }
 
@@ -134,14 +134,17 @@ namespace MTCG.HttpServer
             return data.ToString();
         }
 
-        public void SendResponse(HttpResponse response, TcpClient client)
+        private void SendResponse(HttpResponse response, TcpClient client)
         {
             // "using" keyword -> immediately dispose and close stream when going out of scope
-            using var writer = new StreamWriter(client.GetStream());
+            using NetworkStream stream = client.GetStream();
+            using var writer = new StreamWriter(stream);
 
+            Console.WriteLine("StatusCode should be: "+ (int)response.StatusCode);
             writer.Write($"HTTP/1.1 {(int)response.StatusCode} {response.StatusCode}\r\n");
             if (!string.IsNullOrEmpty(response.Payload))
             {
+                Console.WriteLine("Payload should be: "+response.Payload);
                 var payload = Encoding.UTF8.GetBytes(response.Payload);
                 writer.Write($"Content-Length: {payload.Length}\r\n");
                 writer.Write("\r\n");
@@ -151,7 +154,6 @@ namespace MTCG.HttpServer
             {
                 writer.Write("\r\n");
             }
-
         }
 
         public int GetPort()

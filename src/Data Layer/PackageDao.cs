@@ -147,7 +147,7 @@ namespace MTCG.Data_Layer
                     
                 int monsterTypeOrdinal = reader.GetOrdinal("monstertype");
                 string? monsterType = reader.IsDBNull(monsterTypeOrdinal) ? null : reader.GetString(monsterTypeOrdinal);
-                if (monsterType == null)
+                if (monsterType != null)
                 {
                     Monster monster;
                     Enum.TryParse<Monster>(monsterType, out monster);

@@ -6,7 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MTCG.HttpServer;
-using System.Text.Json;
+using Newtonsoft.Json;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace MTCG.Business_Layer
 {
@@ -96,6 +97,18 @@ namespace MTCG.Business_Layer
             return new HttpResponse(StatusCode.Unauthorized, "Invalid username/password provided");
         }
 
+        public HttpResponse GetUserStats(Dictionary<string,string> headers)
+        {
+            if (!headers.ContainsKey("Authorization:"))
+            {
+                return new HttpResponse(StatusCode.Unauthorized, "Unauthorized error");
+            }
+
+            string token = GetToken(headers);
+            UserStats userStats = _userDao.GetUserStats(token);
+            return new HttpResponse(StatusCode.Ok, "The stats could be retrieved successfully:\n"+JsonConvert.SerializeObject(userStats));
+        }
+
         private bool IsAdminOrUserToken(string username, Dictionary<string, string> headers)
         {
             string getToken = headers["Authorization:"];
@@ -103,6 +116,14 @@ namespace MTCG.Business_Layer
             string token = tokens[1];
             token = token.Trim();
             return token.Equals("admin-mtcgToken") || token.Equals(username + "-mtcgToken");
+        }
+        
+        private string GetToken(Dictionary<string, string> headers)
+        {
+            string getToken = headers["Authorization:"];
+            string[] tokens = getToken.Split(' ');
+            string token = tokens[1].Trim();
+            return token;
         }
 
     }

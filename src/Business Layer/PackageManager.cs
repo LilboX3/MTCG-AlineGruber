@@ -89,7 +89,7 @@ namespace MTCG.Business_Layer
                 return new HttpResponse(StatusCode.NotFound, "No card package available for buying");
             }
 
-            return new HttpResponse(StatusCode.Ok, JsonConvert.SerializeObject(cards));
+            return new HttpResponse(StatusCode.Ok, "Cards:\n"+JsonConvert.SerializeObject(cards));
 
         }
 

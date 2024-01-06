@@ -92,90 +92,10 @@ namespace MTCG.Models
             _battleDeck.AddOpponentCard(wonCard);
         }
         
-        public void ChooseDeck()
+        public void AddToDeck(Card card)
         {
-            if (_userStack.Size == 0)
-            {
-                Console.WriteLine("Your stack is empty. Consider buying a package!");
-                return;
-            }
-
-            if (_userDeck.Size == 4)
-            {
-                Console.WriteLine("Deck full: you already have the maximum of 4 cards, remove one to make space");
-                return;
-            }
-
-            Console.WriteLine("Your current Stack: ");
-            PrintStack();
-            Console.WriteLine("Choose the number of card you want to add to your deck: ");
-            
-            string choice = Console.ReadLine();
-
-            if (IsNumber(choice))
-            {
-                int index = int.Parse(choice);
-                if (_userStack.IndexInRange(index)) {
-
-                    _userDeck.AddNewCard(_userStack.UserStack[index]);
-                    _battleDeck.AddNewCard(_userStack.UserStack[index]);
-
-                    _userStack.RemoveCard(_userStack.UserStack[index]);
-                    Console.WriteLine("Current deck:");
-                    PrintDeck();
-
-                } else
-                {
-                    Console.WriteLine("No card chosen: invalid index");
-                    return;
-                }
-            } else
-            {
-                Console.WriteLine("No card chosen: invalid input");
-                return;
-            }
-            
-        }
-
-        public void RemoveFromDeck()
-        {
-            if (_userDeck.Size <= 0)
-            {
-                Console.WriteLine("Your deck is empty! Buy a package and add cards from your stack");
-                return;
-            }
-
-            Console.WriteLine("Choose a card you want to remove from your deck");
-            PrintDeck();
-            string choice = Console.ReadLine();
-
-            if (IsNumber(choice))
-            {
-                int index = int.Parse(choice);
-                if (_userDeck.IndexInRange(index))
-                {
-                    Card toRemove = _userDeck.CardDeck[index];
-                    _userDeck.RemoveCard(toRemove);
-                    _battleDeck.RemoveCard(toRemove);
-                    _userStack.AddCard(toRemove);
-
-                    Console.WriteLine("Current deck:");
-                    PrintDeck();
-                    Console.WriteLine("Current stack:");
-                    PrintStack();
-                }
-                else
-                {
-                    Console.WriteLine("No card chosen: invalid index");
-                    return;
-                }
-            }
-            else
-            {
-                Console.WriteLine("No card chosen: invalid input");
-                return;
-            }
-
+            _userDeck.AddNewCard(card);
+            _battleDeck.AddNewCard(card);
         }
 
         private static bool IsNumber(string text)

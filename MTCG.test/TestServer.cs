@@ -16,7 +16,7 @@ namespace MTCG.test
         [Test]
         public void TestServerNotNull()
         {
-            Router router = new Router(new BattleManager(), new CardManager(new CardDao()), new TradeManager(), new UserManager(new UserDao()), new PackageManager(new PackageDao(), new CardDao(), new UserDao()), new ScoreboardManager(), new DeckManager(), new IdRouteParser());
+            Router router = new Router(new BattleManager(new UserDao(), new DeckDao()), new CardManager(new CardDao()), new TradeManager(new TradeDao()), new UserManager(new UserDao()), new PackageManager(new PackageDao(), new CardDao(), new UserDao()), new ScoreboardManager(new ScoreboardDao()), new DeckManager(new DeckDao()), new IdRouteParser());
             var server = new HttpServer.HttpServer(IPAddress.Any, 10001, router);
             Assert.IsNotNull(server);
         }
@@ -24,7 +24,7 @@ namespace MTCG.test
         [Test]
         public void TestServerPort()
         {
-            Router router = new Router(new BattleManager(), new CardManager(new CardDao()), new TradeManager(), new UserManager(new UserDao()), new PackageManager(new PackageDao(), new CardDao(), new UserDao()), new ScoreboardManager(), new DeckManager(), new IdRouteParser());
+            Router router = new Router(new BattleManager(new UserDao(), new DeckDao()), new CardManager(new CardDao()), new TradeManager(new TradeDao()), new UserManager(new UserDao()), new PackageManager(new PackageDao(), new CardDao(), new UserDao()), new ScoreboardManager(new ScoreboardDao()), new DeckManager(new DeckDao()), new IdRouteParser());
             var server = new HttpServer.HttpServer(IPAddress.Any, 5432, router);
             Assert.That(server.GetPort(), Is.EqualTo(5432));
         }

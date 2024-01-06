@@ -31,6 +31,7 @@ namespace MTCG.Models
         {
             for(int i = 0; i < 100; i++)
             {
+                Console.WriteLine("ROUND: "+i);
                 if (PlayerLost())
                 {
                     break;
@@ -79,6 +80,20 @@ namespace MTCG.Models
                 return _player2;
             }
             //no winner
+            return null;
+        }
+
+        public User? GetLoser()
+        {
+            if (Player1Wins < Player2Wins)
+            {
+                return _player1;
+            } 
+            if (Player2Wins < Player1Wins)
+            {
+                return _player2;
+            }
+
             return null;
         }
 

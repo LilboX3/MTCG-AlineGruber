@@ -42,6 +42,17 @@ namespace MTCG.Routing
             //extrahierten string aus "id" zurückgeben
             return result.Groups["id"].Success ? result.Groups["id"].Value : null;
         }
+        
+        public bool IsFormatPlainMatch(string resourcePath, string routePattern)
+        {
+            //has /deck with ?format=plain ?
+            var pattern = "^" + routePattern.Replace("/", "\\/") + "(\\?format=plain)?$";
+            //should not be path just /deck
+            var deckPattern = "^" + routePattern.Replace("/", "\\/") + "$";
+
+            return Regex.IsMatch(resourcePath, pattern) && !Regex.IsMatch(resourcePath, deckPattern);
+        }
+
 
         private Dictionary<string, string> ParseQueryParameters(string route)
         {

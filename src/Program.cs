@@ -15,7 +15,7 @@ namespace MTCG
         {
             IPAddress ipAdress = IPAddress.Any;
             int port = 10001;
-            Router router = new Router(new BattleManager(), new CardManager(new CardDao()), new TradeManager(), new UserManager(new UserDao()), new PackageManager(new PackageDao(), new CardDao(), new UserDao()), new ScoreboardManager(), new DeckManager(), new IdRouteParser());
+            Router router = new Router(new BattleManager(new UserDao(), new DeckDao()), new CardManager(new CardDao()), new TradeManager(new TradeDao()), new UserManager(new UserDao()), new PackageManager(new PackageDao(), new CardDao(), new UserDao()), new ScoreboardManager(new ScoreboardDao()), new DeckManager(new DeckDao()), new IdRouteParser());
             HttpServer.HttpServer newServer = new HttpServer.HttpServer(ipAdress, port, router);
             await newServer.StartAsync();
 
