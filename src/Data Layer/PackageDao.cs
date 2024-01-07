@@ -28,7 +28,7 @@ namespace MTCG.Data_Layer
             string card4id = package.Cards[3].Id;
             string card5id = package.Cards[4].Id;
             
-            Console.Write("CARD IDs ARE:\n"+card1id+"\n"+card2id+"\n"+card3id+"\n"+card4id+"\n");
+            Console.Write("CARD IDs ARE:\n"+card1id+"\n"+card2id+"\n"+card3id+"\n"+card4id+"\n"+card5id);
 
             using var cmd = new NpgsqlCommand(InsertPackageCommand, connection);
             cmd.Parameters.AddWithValue("card1id", card1id);

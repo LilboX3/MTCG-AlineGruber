@@ -102,14 +102,16 @@ namespace MTCG
 
                 { Method: "POST", Path: "/battles"} => _battleManager.JoinLobby(request.Headers), //enter lobby to start battle, wait for other user, return battle log
 
-                //{ Method: "GET", Path: "/tradings"} => _tradeManager.GetAvailableTrades(request.Headers), // retrieve all available deals, as array
-                /*{ Method: "POST", Path: "/tradings"} => _tradeManager.CreateTrade(),//create new deal, only for card you own, no response payload
-                { Method: "DELETE", Path: } => _tradeManager.DeleteDeal(), //Delete an existing deal, only by owner (id in path)
-                { Method: "POST", Path: } => _tradeManager.MakeDeal(), //carry out deal, request has tradeid and card id, no payload response, must be card owner, meet requirements
-                */
+                { Method: "GET", Path: "/tradings"} => _tradeManager.GetAvailableTrades(request.Headers), // retrieve all available deals, as array
+                { Method: "POST", Path: "/tradings"} => _tradeManager.CreateTrade(request.Headers, Deserialize<TradingDealFactory>(request.Payload)),//create new deal, only for card you own, no response payload
+                { Method: "DELETE", Path: var path} when isTradeIdMatch(path) => _tradeManager.DeleteDeal(parseTradeId(path), request.Headers), //Delete an existing deal, only by owner (id in path)
+                { Method: "POST", Path: var path} when isTradeIdMatch(path) => _tradeManager.MakeDeal(parseTradeId(path), request.Headers, request.Payload), //carry out deal, request has tradeid and card id, no payload response, must be card owner, meet requirements
+                
                 _ => new HttpResponse(StatusCode.NotImplemented, "Route Not Implemented")
 
             };
+            //TODO: add more curl
+            //TODO: write protocol
 
             return response;
         }

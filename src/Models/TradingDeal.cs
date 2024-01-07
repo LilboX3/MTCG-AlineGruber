@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MTCG.Models
 {
-    internal class TradingDeal
+    public class TradingDeal
     {
         //Id of the deal
         public string Id {  get; set; }
@@ -15,6 +15,18 @@ namespace MTCG.Models
         //Required card type
         public string Type { get; set; }
         //Required min damage
+        public double MinDamage { get; set; }
+        //Userid of owner
+        public int UserId { get; set; }
+
+        public TradingDeal(string tradeId, string type, double minDamage, string cardToTrade, int userId)
+        {
+            Id = tradeId;
+            Type = type;
+            MinDamage = minDamage;
+            CardToTrade = cardToTrade;
+            UserId = userId;
+        }
 
     }
 }

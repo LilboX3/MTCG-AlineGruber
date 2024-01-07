@@ -238,6 +238,8 @@ namespace MTCG.Models
             string log = playerA + " vs " + playerB + " => " + winner;
             RoundLog = log;
         }
+        
+        //TODO: add crit and evasion chance
 
 
     }

@@ -72,12 +72,7 @@ namespace MTCG.Data_Layer
             cmd.Parameters.AddWithValue("userid", userid);
 
             var reader = cmd.ExecuteReader();
-            if (!reader.Read())
-            {
-                //no cards belong to user
-                Console.WriteLine("user "+userid+" has no cards");
-                return null;
-            }
+            int index = 0;
 
             while (reader.Read())
             {
@@ -102,8 +97,15 @@ namespace MTCG.Data_Layer
                     SpellCard spellCard = new SpellCard((float)damage, cardid, element);
                     cards.Add(spellCard);
                 }
-                
-               
+
+                index++;
+
+            }
+            if (index==0)
+            {
+                //no cards belong to user
+                Console.WriteLine("user "+userid+" has no cards");
+                return null;
             }
             
             return cards.ToArray();

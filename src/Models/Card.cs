@@ -26,6 +26,22 @@ namespace MTCG.Models
             string CardString = Name + ", damage:" + Damage;
             return CardString;
         }
+        
+        //5% chance to crit for double the damage
+        public bool CheckCritChance()
+        {
+            Random random = new Random();
+            int chance = random.Next(0, 101);
+            return chance <= 4; //when 0, 1, 2, 3, 4
+        }
+        
+        //2% chance to evade an attack completely, if both evade: draw
+        public bool CheckEvasionChance()
+        {
+            Random random = new Random();
+            int chance = random.Next(0, 101);
+            return chance <= 1; //when 0 or 1
+        }
 
         //Water > fire, fire > normal, normal > water
         public float CalcDamageAgainst(Element opponentElement)

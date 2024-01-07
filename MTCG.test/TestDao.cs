@@ -59,6 +59,48 @@ namespace MTCG.test
         }
 
         [Test]
+        public void TestCardDaoNotNull()
+        {
+            CardDao cardDao = new CardDao();
+            Assert.That(cardDao, Is.Not.Null);
+        }
+
+        [Test]
+        public void TestDeckDaoNotNull()
+        {
+            DeckDao deckDao = new DeckDao();
+            Assert.That(deckDao, Is.Not.Null);
+        }
+
+        [Test]
+        public void TestPackageDaoNotNull()
+        {
+            PackageDao packageDao = new PackageDao();
+            Assert.That(packageDao, Is.Not.Null);
+        }
+
+        [Test]
+        public void TestScoreboardDaoNotNull()
+        {
+            ScoreboardDao scoreboardDao = new ScoreboardDao();
+            Assert.That(scoreboardDao, Is.Not.Null);
+        }
+
+        [Test]
+        public void TestTradeDaoNotNull()
+        {
+            TradeDao tradeDao = new TradeDao();
+            Assert.That(tradeDao, Is.Not.Null);
+        }
+
+        [Test]
+        public void TestUserDaoNotNull()
+        {
+            UserDao userDao2 = new UserDao();
+            Assert.That(userDao2, Is.Not.Null);
+        }
+
+        [Test]
         public void TestColumnsExists()
         {
             string GetColumn = @"SELECT column_name FROM information_schema.columns WHERE table_name = 'User'";
