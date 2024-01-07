@@ -87,7 +87,7 @@ namespace MTCG.Business_Layer
                 return new HttpResponse(StatusCode.Ok, log+"\nWinner is: "+winner);
             }
 
-            if (lobby.Count > 2)
+            if (lobby.Count !=1 || lobby.Count != 2)
             {
                 //just in case, shouldnt be possible!
                 return new HttpResponse(StatusCode.Forbidden, "Too many players!\n");

@@ -46,11 +46,9 @@ namespace MTCG.Routing
         public bool IsFormatPlainMatch(string resourcePath, string routePattern)
         {
             //has /deck with ?format=plain ?
-            var pattern = "^" + routePattern.Replace("/", "\\/") + "(\\?format=plain)?$";
-            //should not be path just /deck
-            var deckPattern = "^" + routePattern.Replace("/", "\\/") + "$";
-
-            return Regex.IsMatch(resourcePath, pattern) && !Regex.IsMatch(resourcePath, deckPattern);
+            var pattern = "^" + routePattern.Replace("/", "\\/") + "(\\?format=plain)+$";
+            //Todo: check if this regex works, else revert
+            return Regex.IsMatch(resourcePath, pattern);
         }
 
 

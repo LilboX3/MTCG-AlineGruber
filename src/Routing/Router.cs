@@ -110,8 +110,6 @@ namespace MTCG
                 _ => new HttpResponse(StatusCode.NotImplemented, "Route Not Implemented")
 
             };
-            //TODO: add more curl
-            //TODO: write protocol
 
             return response;
         }
