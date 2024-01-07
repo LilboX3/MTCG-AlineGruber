@@ -17,6 +17,12 @@ namespace MTCG.Models
         public User? Winner { get; set; }
         public User? Loser { get; set; }
         public string RoundLog { get; set; }
+
+        public bool Player1Crit { get; set; } = false;
+        public bool Player1Evasion { get; set; } = false;
+        public bool Player2Crit { get; set; } = false;
+        public bool Player2Evasion { get; set; } = false;
+        
         public Round(User player1, User player2)
         {
             if(player1 == null || player2 == null)
@@ -89,6 +95,29 @@ namespace MTCG.Models
         {
             float card1Damage = player1Card.CalcDamageAgainst(player2Card.ElementType);
             float card2Damage = player2Card.CalcDamageAgainst(player1Card.ElementType);
+            //Check if a player in spell round crits or evades attack
+            if (player1Card.CheckCritChance())
+            {
+                Player1Crit = true;
+                card1Damage *= 2;
+            }
+            if (player2Card.CheckCritChance())
+            {
+                Player2Crit = true;
+                card2Damage *= 2;
+            }
+
+            if (player1Card.CheckEvasionChance())
+            {
+                Player1Evasion = true;
+                card2Damage = 0;
+            }
+
+            if (player2Card.CheckEvasionChance())
+            {
+                Player2Evasion = true;
+                card1Damage = 0;
+            }
             SpellCard? winnerCard = null;
 
             if(card1Damage > card2Damage)
@@ -126,6 +155,27 @@ namespace MTCG.Models
             float card1Damage = player1Card.CalcDamageAgainst(player2Card.ElementType);
             float card2Damage = player2Card.CalcDamageAgainst(player1Card.ElementType);
             Card? winnerCard = null;
+            //Check if a player crits or evades attack
+            if (player1Card.CheckCritChance())
+            {
+                Player1Crit = true;
+                card1Damage *= 2;
+            }
+            if (player2Card.CheckCritChance())
+            {
+                Player2Crit = true;
+                card2Damage *= 2;
+            }
+            if (player1Card.CheckEvasionChance())
+            {
+                Player1Evasion = true;
+                card2Damage = 0;
+            }
+            if (player2Card.CheckEvasionChance())
+            {
+                Player2Evasion = true;
+                card1Damage = 0;
+            }
 
             if (card1Damage > card2Damage)
             {
@@ -160,11 +210,35 @@ namespace MTCG.Models
         //Normal Monster round
         private MonsterCard? PlayMonsterRound(MonsterCard player1Card, MonsterCard player2Card)
         {
-            if(player1Card.Damage > player2Card.Damage)
+            float card1Damage = player1Card.Damage;
+            float card2Damage = player2Card.Damage;
+            //Check if a player in monster round crits or evades attack
+            if (player1Card.CheckCritChance())
+            {
+                Player1Crit = true;
+                card1Damage *= 2;
+            }
+            if (player2Card.CheckCritChance())
+            {
+                Player2Crit = true;
+                card2Damage *= 2;
+            }
+            if (player1Card.CheckEvasionChance())
+            {
+                Player1Evasion = true;
+                card2Damage = 0;
+            }
+            if (player2Card.CheckEvasionChance())
+            {
+                Player2Evasion = true;
+                card1Damage = 0;
+            }
+            
+            if(card1Damage > card2Damage)
             {
                 return player1Card;
             }
-            else if(player2Card.Damage > player1Card.Damage)
+            else if(card2Damage > card1Damage)
             {
                 return player2Card;
             }
@@ -210,9 +284,34 @@ namespace MTCG.Models
             {
                 winner = "Draw (no action)";
             }
-
-            string log = playerA + " vs " + playerB + " => "+ damage1 + " VS " + damage2 + " -> " + actualDamage1 + " VS " + actualDamage2 + " => " + winner;
+            string extra = CritOrEvasionExtra();
+            string log = playerA + " vs " + playerB + " => "+ damage1 + " VS " + damage2 + " -> " + actualDamage1 + " VS " + actualDamage2 + " => "+ extra + winner;
             RoundLog = log;
+        }
+
+        private string CritOrEvasionExtra()
+        {
+            string extra = "";
+            if (Player1Crit)
+            {
+                extra += "PlayerA hit a critical attack! ";
+            }
+
+            if (Player2Crit)
+            {
+                extra += "PlayerB hit a critical attack! ";
+            }
+
+            if (Player1Evasion)
+            {
+                extra += "PlayerA evaded the attack! ";
+            }
+
+            if (Player2Evasion)
+            {
+                extra += "PlayerB evaded the attack! ";
+            }
+            return extra;
         }
 
         public void BuildMonsterLog(MonsterCard? winnerCard, MonsterCard player1Card, MonsterCard player2Card)
@@ -235,11 +334,13 @@ namespace MTCG.Models
                 winner = "Draw (no action)";
             }
 
-            string log = playerA + " vs " + playerB + " => " + winner;
+            string extra = CritOrEvasionExtra();
+
+            string log = playerA + " vs " + playerB + " => " + extra + winner;
             RoundLog = log;
         }
         
-        //TODO: add crit and evasion chance
+        //TODO: add crit and evasion chance, only in rounds with no specialty
 
 
     }

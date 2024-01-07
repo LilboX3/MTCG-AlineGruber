@@ -38,11 +38,13 @@ namespace MTCG.Business_Layer
                 return new HttpResponse(StatusCode.InternalServerError, "Could not create user deck");
             }
             FillUserDeck(deck, user);
-            //TODO: race condition, lock list
-            //lock List to avoid both threads accessing at the same time
             lock (lobby)
             {
                 lobby.Add(user);
+            }
+            if (lobby.Count == 1)
+            {
+                return new HttpResponse(StatusCode.Ok, "Not enough players (yet!)\n");
             }
             
             // Start battle if enough user in lobby
@@ -51,6 +53,7 @@ namespace MTCG.Business_Layer
                 //TODO: battle
                 if (lobby.ElementAt(0).UserCredentials.Username == lobby.ElementAt(1).UserCredentials.Username)
                 {
+                    lobby.RemoveAt(1);
                     return new HttpResponse(StatusCode.Forbidden, "Error: cannot battle yourself");
                 }
                 Battle battle = new Battle(lobby.ElementAt(0), lobby.ElementAt(1));
@@ -83,7 +86,13 @@ namespace MTCG.Business_Layer
                 
                 return new HttpResponse(StatusCode.Ok, log+"\nWinner is: "+winner);
             }
-            return new HttpResponse(StatusCode.Ok, "Not enough players (yet!)\n");
+
+            if (lobby.Count > 2)
+            {
+                //just in case, shouldnt be possible!
+                return new HttpResponse(StatusCode.Forbidden, "Too many players!\n");
+            }
+            return new HttpResponse(StatusCode.InternalServerError, "Error Battling\n");
         }
 
         private bool UpdateEloOfUsers()
